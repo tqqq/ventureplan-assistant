@@ -25,3 +25,8 @@ def kboard_click(key):
     pass
 
 
+def kboard_combine_click(key1, key2):
+    # TODO
+    pass
+
+

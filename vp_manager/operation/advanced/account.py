@@ -6,7 +6,7 @@ def open_client():
     pass
 
 
-def choose_character():
+def choose_role(role, current_role, role_list):
     # TODO
     pass
 

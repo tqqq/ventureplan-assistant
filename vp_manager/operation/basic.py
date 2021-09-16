@@ -47,3 +47,4 @@ class DeviceManager:
         pass
 
 
+device_manager = DeviceManager()

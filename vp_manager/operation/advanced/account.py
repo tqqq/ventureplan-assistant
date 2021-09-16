@@ -1,14 +1,42 @@
 # coding=utf-8
+import logging
+import time
+
+from vp_manager.operation.basic import device_manager
+from vp_manager.config import position, sleep_time, key_setting
+from vp_manager.utils.exceptions import VPException
+
+logger = logging.getLogger(__name__)
 
 
 def open_client():
-    # TODO
-    pass
+    with device_manager:
+        device_manager.mouse_click(position.START_GAME_X, position.START_GAME_Y)
+    time.sleep(sleep_time.AFTER_START_GAME)
 
 
 def choose_role(role, current_role, role_list):
-    # TODO
-    pass
+    if role == current_role:
+        return
+
+    if role not in role_list:
+        raise VPException(f'target role {role} not in role list {role_list}')
+    if current_role not in role_list:
+        raise VPException(f'current role {role} not in role list {role_list}')
+
+    target_index = role_list.index(role)
+    current_index = role_list.index(current_role)
+
+    if target_index > current_index:
+        with device_manager:
+            for i in range(target_index-current_index):
+                device_manager.kboard_click('down')
+                time.sleep(sleep_time.BETWEEN_SWITCH_ROLE)
+    else:
+        with device_manager:
+            for i in range(current_index-target_index):
+                device_manager.kboard_click('up')
+                time.sleep(sleep_time.BETWEEN_SWITCH_ROLE)
 
 
 def choose_server():
@@ -17,22 +45,27 @@ def choose_server():
 
 
 def enter_game():
-    # TODO
-    pass
+    with device_manager:
+        device_manager.kboard_click('enter')
+    time.sleep(sleep_time.AFTER_LOGIN)
 
 
 def logout():
-    # TODO
-    pass
+    key = key_setting.KEY_LOGOUT
+    with device_manager:
+        device_manager.kboard_click(key)
+    time.sleep(sleep_time.AFTER_LOGOUT)
 
 
 def close_client():
-    # TODO
-    pass
+    with device_manager:
+        device_manager.mouse_click(position.CLOSE_GAME_X, position.CLOSE_GAME_Y)
+    time.sleep(sleep_time.AFTER_CLOSE_GAME)
 
 
 def print_role_info():
-    # TODO
-    pass
-
+    key = key_setting.KEY_PRINT_ROLE_INFO
+    with device_manager:
+        device_manager.kboard_click(key)
+    time.sleep(0.2)
 

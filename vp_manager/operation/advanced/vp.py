@@ -11,10 +11,16 @@ logger = logging.getLogger(__name__)
 
 
 def open_venture_plan():
-    key = key_setting.KEY_CORGI_TOY
+    key1 = key_setting.KEY_SET_FIRST_VIEW
     with device_manager:
-        device_manager.kboard_click(key)
+        device_manager.kboard_click(key1)
+    time.sleep(0.8)
+
+    key2 = key_setting.KEY_CORGI_TOY
+    with device_manager:
+        device_manager.kboard_click(key2)
     time.sleep(0.2)
+
     with device_manager:
         device_manager.mouse_click(position.COMMAND_TABLE_X, position.COMMAND_TABLE_Y)
     time.sleep(0.2)
@@ -34,8 +40,9 @@ def enter_mission_view(m_id):
 
 
 def close_mission_view():
-    # TODO
-    pass
+    with device_manager:
+        device_manager.mouse_click(position.CLOSE_MISSION_VIEW_X, position.CLOSE_MISSION_VIEW_Y)
+    time.sleep(0.3)
 
 
 def assign_one_follower(index):
@@ -79,12 +86,14 @@ def calculate_arrangement():
 
 
 def confirm_mission():
-    # TODO
-    pass
+    with device_manager:
+        device_manager.mouse_click(position.CONFIRM_MISSION_X, position.CONFIRM_MISSION_Y)
+    time.sleep(0.3)
 
 
 def start_all_missions():
-    # TODO
-    pass
+    with device_manager:
+        device_manager.mouse_click(position.START_ALL_MISSIONS_X, position.START_ALL_MISSIONS_Y)
+    time.sleep(sleep_time.AFTER_START_ALL_MISSIONS)
 
 

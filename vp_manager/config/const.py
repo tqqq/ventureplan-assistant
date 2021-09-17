@@ -32,4 +32,11 @@ MRT_PET = 'pet'
 MRT_BATTLE = 'battle'
 
 
+# follower fight result
+FFR_MUST_WIN = 1
+FFR_MUST_FAIL = 2
+FFR_UNKNOWN = 3
+
+
+
 

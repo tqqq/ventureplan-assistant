@@ -1,7 +1,7 @@
 # coding=utf-8
 
 reward_list = {
-    'id': {
+    '121': {
         'type': 'fish_box'
     }
 }

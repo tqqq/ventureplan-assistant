@@ -7,6 +7,9 @@ from vp_manager.config import position, sleep_time, key_setting
 from vp_manager.utils.exceptions import VPException
 
 
+logger = logging.getLogger(__name__)
+
+
 def open_venture_plan():
     key = key_setting.KEY_CORGI_TOY
     with device_manager:
@@ -35,19 +38,44 @@ def close_mission_view():
     pass
 
 
-def assign_one_follower():
-    # TODO
+def assign_one_follower(index):
+    with device_manager:
+        x, y = position.FOLLOWERS[index]
+        device_manager.mouse_right_click(x, y)
+        time.sleep(0.1)
     pass
 
 
-def assign_follower_team():
-    # TODO
-    pass
+def assign_follower_team(arrangement, index):
+    arrangement = arrangement.lower()
+    with device_manager:
+        for c in arrangement:
+            if c == '1' or c == '0':
+                device_manager.mouse_right_click(position.SOLDIER_1_X, position.SOLDIER_1_Y)
+                time.sleep(0.1)
+            elif c == '2':
+                device_manager.mouse_right_click(position.SOLDIER_2_X, position.SOLDIER_2_Y)
+                time.sleep(0.1)
+            elif c == 'x':
+                x, y = position.FOLLOWERS[index]
+                device_manager.mouse_right_click(x, y)
+                time.sleep(0.1)
+            else:
+                device_manager.mouse_right_click(position.SOLDIER_1_X, position.SOLDIER_1_Y)
+                time.sleep(0.1)
+                logger.warning(f'unknown arrangement: {arrangement}')
+
+        for i, c in enumerate(arrangement):
+            if c == '0':
+                x, y = position.BATTLE_GROUND[i]
+                device_manager.mouse_right_click(x, y)
+                time.sleep(0.1)
 
 
-def calcu_win_rate():
-    # TODO
-    pass
+def calculate_arrangement():
+    with device_manager:
+        device_manager.mouse_click(position.CALCULATE_BUTTON_X, position.CALCULATE_BUTTON_Y)
+    time.sleep(sleep_time.AFTER_CALCULATE)
 
 
 def confirm_mission():

@@ -27,8 +27,11 @@ def copy_text():
     time.sleep(0.2)
 
 
-def close_window():
+def close_window(clear):
     with device_manager:
-        device_manager.mouse_click(position.COPY_CHAT_CLOSE_X, position.COPY_CHAT_CLOSE_Y)
-    # time.sleep(0.2)
+        if clear:
+            device_manager.mouse_click(position.COPY_CHAT_CLOSE_CLEAR_X, position.COPY_CHAT_CLOSE_CLEAR_Y)
+        else:
+            device_manager.mouse_click(position.COPY_CHAT_CLOSE_NO_CLEAR_X, position.COPY_CHAT_CLOSE_NO_CLEAR_Y)
+        # time.sleep(0.2)
 

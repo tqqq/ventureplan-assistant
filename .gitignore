@@ -1,3 +1,7 @@
 venv/
 *.log.*
 *.log
+vp_manager/config/account.py
+vp_manager/config/key_setting.py
+vp_manager/config/position.py
+vp_manager/config/sleep_time.py

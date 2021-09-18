@@ -220,7 +220,7 @@ class Engine:
 
     def is_mission_worth(self, mission):
         """
-            判断任务值不值得做
+            判断任务值不值得做(裁缝/肉袋子)
         """
         # TODO: add complex logic, judge by role config
         m_id = mission['id']

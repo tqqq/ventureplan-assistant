@@ -13,6 +13,9 @@ def open_client():
     with device_manager:
         device_manager.mouse_click(position.START_GAME_X, position.START_GAME_Y)
     time.sleep(sleep_time.AFTER_START_GAME)
+    with device_manager:
+        device_manager.mouse_click(position.GAME_WINDOW_X, position.GAME_WINDOW_Y)
+    time.sleep(0.5)
 
 
 def choose_role(role, current_role, role_list):

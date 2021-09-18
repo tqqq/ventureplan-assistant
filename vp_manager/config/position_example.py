@@ -3,6 +3,10 @@
 START_GAME_X = 0
 START_GAME_Y = 0
 
+# 游戏窗口，获取焦点
+GAME_WINDOW_X = 0
+GAME_WINDOW_Y = 0
+
 # 右上角 X
 CLOSE_GAME_X = 0
 CLOSE_GAME_Y = 0

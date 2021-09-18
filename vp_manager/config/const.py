@@ -1,5 +1,9 @@
 # coding=utf-8
 
+# TODO: path
+DB_PATH = 'F:\\notes\\vp_test\\ventureplan-assistant\\vp_manager\\database\\venture_plan.sqlite'
+TABLE_NAME = 'arrangement'
+
 # message type from queue
 MT_ROLE_DATA = 'ROLE_DATA'
 MT_MISSION_DATA = 'MISSION_DATA'
@@ -35,7 +39,8 @@ MRT_BATTLE = 'battle'
 # follower fight result
 FFR_MUST_WIN = 1
 FFR_MUST_FAIL = 2
-FFR_UNKNOWN = 3
+FFR_NOT_SURE = 3  # has record but fail_health < health < win_health
+FFR_UNKNOWN = 4  # no record
 
 
 

@@ -132,28 +132,26 @@ class Engine:
 
         followers = follower_data['followers'][:3]  # only search first 3 followers
         s_level = follower_data['soldier_level']
-        m_id, m_level= mission_data['id'], mission_data['level']
+        m_id, m_level = mission_data['id'], mission_data['level']
         m_info = global_mission_list.get('m_id')
 
-        result = self.get_arrangement_by_storage(m_id, m_level, s_level, followers)
-        must_win_followers = result[const.FFR_MUST_WIN]
-        unknown_followers = result[const.FFR_UNKNOWN]
+        follower = self.get_arrangement_by_storage(mission_data, s_level, followers)
 
         is_mission_win = False
-
-        if must_win_followers:
+        if not follower:
+            pass
+        elif follower['status'] == const.FFR_MUST_WIN:
             is_mission_win = True
-            follower = must_win_followers[0]
-
-            logger.info(f'will arrange ({follower["level"]}) {follower["name"]} ({follower["health"]}) for mission ({m_level}){m_info["name"]}, arrangement is {follower["arrangement"]}')
+            logger.info(f'will arrange ({follower["level"]}) {follower["name"]} ({follower["health"]})'
+                        f' for mission ({m_level}){m_info["name"]}, arrangement is {follower["arrangement"]}')
             plugin_control.assign_follower_team(follower['arrangement'], follower['index'])
-        elif unknown_followers:
-            for follower in unknown_followers:
-                arrange = self.get_arrangement_by_plugin(follower)
-                update_arrangement(m_id=m_id, m_level=m_level, f_id=follower['id'], f_level=follower['level'], s_level=s_level, f_health=follower['health'], arrange=arrange)
-                if arrange:
-                    is_mission_win = True
-                    break
+        elif follower['status'] == const.FFR_NOT_SURE or follower['status'] == const.FFR_UNKNOWN:
+            arrange = self.get_arrangement_by_plugin(follower)
+            follower['arrangement'] = arrange
+            # TODO: update in new thread
+            update_arrangement(mission=mission_data, follower=follower, s_level=s_level)
+            if arrange:
+                is_mission_win = True
 
         if is_mission_win:
             plugin_control.confirm_mission()
@@ -164,17 +162,15 @@ class Engine:
 
         return const.MER_FAILED
 
-    def get_arrangement_by_storage(self, m_id, m_level, s_level, followers):
+    def get_arrangement_by_storage(self, mission, s_level, followers):
         """
             followers: the first 3 followers
         """
-        result = get_win_arranges(m_id=m_id, m_level=m_level, s_level=s_level, followers=followers)
+
+        result = get_win_arranges(mission=mission, s_level=s_level, followers=followers)
         result = {item['f_id']: item for item in result}
 
-        final_result = {
-            const.FFR_MUST_WIN: [],
-            const.FFR_UNKNOWN: [],
-        }
+        final_follower = None
 
         for i, follower in enumerate(followers):
             follower['index'] = i  # position
@@ -182,16 +178,20 @@ class Engine:
             f_id, f_health = follower['id'], follower['health']
             record = result.get(f_id)
             if not record:
-                final_result[const.FFR_UNKNOWN].append(follower)
-            elif f_health < record['fail_health']:
+                follower['status'] = const.FFR_UNKNOWN
+            elif f_health <= record['fail_health']:
                 continue
-            elif f_health > record['win_health']:
+            elif f_health >= record['win_health']:
+                follower['status'] = const.FFR_MUST_WIN
                 follower['arrangement'] = record['arrangement']
-                final_result[const.FFR_MUST_WIN].append(follower)
+                final_follower = follower
+                break
             else:
-                final_result[const.FFR_UNKNOWN].append(follower)
+                follower['status'] = const.FFR_NOT_SURE
+            if not final_follower:
+                final_follower = follower
 
-        return final_result
+        return final_follower
 
     def arrange_follower(self, follower):
 

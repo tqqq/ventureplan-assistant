@@ -8,6 +8,7 @@ TABLE_NAME = 'arrangement'
 MT_ROLE_DATA = 'ROLE_DATA'
 MT_MISSION_DATA = 'MISSION_DATA'
 MT_FOLLOWER_INFO = 'FOLLOWER_INFO'
+MT_SOLDIER_LEVEL = 'FOLLOWER_INFO'
 MT_MISSION_RESULT = 'MISSION_RESULT'
 
 
@@ -18,22 +19,29 @@ MER_END = 2
 
 
 # mission reward type
-MRT_GOLD = 'gold'
-MRT_ANIMA = 'anima'
-MRT_EXP = 'exp'
-MRT_EQUIP = 'equip'
-MRT_RUNE = 'rune'  #
-MRT_BOX = 'box'  #
+# from aPaiXu.lua
+MRT_GOLD = 'Gold'
+MRT_ANIMA = 'ReservoirAnima'
+MRT_EXP = 'XP'
+MRT_EXP_ITEM = 'XPitem'
+MRT_EQUIP = 'Equip'
+MRT_RUNE = 'VeiledAugmentRune'  #
+MRT_BOX = 'Treasure'  #
+MRT_ASH = 'Maw'  #
+MRT_ASH_2 = 'SoulCinders'  #
+MRT_PET = 'BattlePetCurrency'
+MRT_BATTLE = 'Campaign'
+MRT_SEED = 'Covenants'
+MRT_REP = 'Reputation'
+MRT_UNKNOWN = 'Unknown'
+
 MRT_BOX_FISH = 'fish_box'  #
 MRT_BOX_MEAT = 'meat_box'  #
 MRT_BOX_MINE = 'mine_box'  #
 MRT_BOX_CLOTH = 'cloth_box'  #
-MRT_BOX_HERBAL = 'herbal_box'  #
+MRT_BOX_GRASS = 'grass_box'  #
 MRT_BOX_LEATHER = 'leather_box'  #
-MRT_ASH = 'ash'  # min shang
-MRT_ASH_2 = 'ash_2'  # pa ta hui jin
-MRT_PET = 'pet'
-MRT_BATTLE = 'battle'
+MRT_BOX_MAGIC = 'leather_magic'  #
 
 
 # follower fight result

@@ -19,6 +19,8 @@ message_patterns = {
     const.MT_ROLE_DATA: re.compile(r'##ROLE_DATA##(.*?)##'),
     const.MT_MISSION_DATA: re.compile(r'##MT_MISSION_DATA##(.*?)##'),
     const.MT_MISSION_RESULT: re.compile(r'##MISSION_RESULT##(.*?)##'),
+    const.MT_FOLLOWER_INFO: re.compile(r'##MISSION_RESULT##(.*?)##'),
+    const.MT_SOLDIER_LEVEL: re.compile(r'##MISSION_RESULT##(\d+)##'),
 }
 
 
@@ -92,26 +94,25 @@ class Engine:
 
     def execute_mission(self, index):
         """
-        mission_data: {
+        mission: {
             "id": 123,
             "level": 48,
             "reward": {
-                "id": 1234,
+                "id": "1234 1235",
                 "type": "gold"
             }
         }
 
-        follower_data: {
-            "followers":[
-                {
-                    "id": 123,
-                    "level": 47,
-                    "health": 1230
-                },
-                ...
-            ],
-            "soldier_level": 47
-        }
+        follower_data: [
+            {
+                "id": 123,
+                "level": 47,
+                "health": 1230
+            },
+            ...
+        ]
+        soldier_level: 47
+
 
         :param index:
         :return:
@@ -124,34 +125,43 @@ class Engine:
         text = self.get_message()
         m_pattern = message_patterns.get(const.MT_MISSION_DATA)
         f_pattern = message_patterns.get(const.MT_FOLLOWER_INFO)
-        mission_data = json.loads(m_pattern.findall(text)[-1])
-        follower_data = json.loads(f_pattern.findall(text)[-1])
+        s_pattern = message_patterns.get(const.MT_SOLDIER_LEVEL)
 
-        if not self.is_mission_worth(mission_data):
+        mission = json.loads(m_pattern.findall(text)[-1])  # id, level
+        followers = json.loads(f_pattern.findall(text)[-1])[:4]  # only search first 4 followers
+        s_level = json.loads(s_pattern.findall(text)[-1])
+
+        if not self.is_mission_end(mission):
             return const.MER_END
 
-        followers = follower_data['followers'][:3]  # only search first 3 followers
-        s_level = follower_data['soldier_level']
-        m_id, m_level = mission_data['id'], mission_data['level']
-        m_info = global_mission_list.get('m_id')
+        if not self.is_mission_worth(mission):
+            return const.MER_FAILED
 
-        follower = self.get_arrangement_by_storage(mission_data, s_level, followers)
+        m_id, m_level = mission['id'], mission['level']
+        m_info = global_mission_list.get('m_id')
+        if not m_info:
+            logger.warning(f"Unknown mission id: {m_id}")
+            return const.MER_FAILED
+
+        follower = self.get_arrangement_by_storage(mission, s_level, followers)
 
         is_mission_win = False
         if not follower:
             pass
         elif follower['status'] == const.FFR_MUST_WIN:
             is_mission_win = True
-            logger.info(f'will arrange ({follower["level"]}) {follower["name"]} ({follower["health"]})'
-                        f' for mission ({m_level}){m_info["name"]}, arrangement is {follower["arrangement"]}')
+            logger.info(f'get arrangement by cache success, will arrange ({follower["level"]}) {follower["name"]} '
+                        f'({follower["health"]}) for mission ({m_level}){m_info["name"]}, arrangement is {follower["arrangement"]}')
             plugin_control.assign_follower_team(follower['arrangement'], follower['index'])
         elif follower['status'] == const.FFR_NOT_SURE or follower['status'] == const.FFR_UNKNOWN:
             arrange = self.get_arrangement_by_plugin(follower)
             follower['arrangement'] = arrange
             # TODO: update in new thread
-            update_arrangement(mission=mission_data, follower=follower, s_level=s_level)
+            update_arrangement(mission=mission, follower=follower, s_level=s_level)
             if arrange:
                 is_mission_win = True
+                logger.info(f'get arrangement by plugin success, will arrange ({follower["level"]}) {follower["name"]} '
+                            f'({follower["health"]}) for mission ({m_level}){m_info["name"]}, arrangement is {arrange}')
 
         if is_mission_win:
             plugin_control.confirm_mission()
@@ -159,12 +169,12 @@ class Engine:
             return const.MER_SUCCESS
         else:
             plugin_control.close_mission_view()
-
-        return const.MER_FAILED
+            logger.info(f'mission ({m_level}){m_info["name"]} will fail anyway')
+            return const.MER_FAILED
 
     def get_arrangement_by_storage(self, mission, s_level, followers):
         """
-            followers: the first 3 followers
+            followers: the first 4 followers
         """
 
         result = get_win_arranges(mission=mission, s_level=s_level, followers=followers)
@@ -193,24 +203,30 @@ class Engine:
 
         return final_follower
 
-    def arrange_follower(self, follower):
+    def is_mission_end(self, mission):
+        """
+            如果是垃圾任务，结束流程
+        """
+        reward = mission['reward']
+        r_type = reward.get('type')
+        is_end = r_type not in [const.MRT_ANIMA, const.MRT_GOLD, const.MRT_PET, const.MRT_BOX]
+        return is_end
 
-        arrangement = follower['arrangement']
-        index = follower['index']
-
-    def is_mission_worth(self, data):
+    def is_mission_worth(self, mission):
         """
             判断任务值不值得做
-        :param data:
-        :return:
         """
         # TODO: add complex logic, judge by role config
-        m_id = data['id']
-        reward = data['reward']
+        m_id = mission['id']
+        reward = mission['reward']
         r_id, r_type = reward.get('id'), reward.get('type')
 
         if r_id and r_type == const.MRT_BOX:
-            r_type = reward_list[r_id]['type']
+            for _id in r_id.split():
+                item = reward_list.get(_id)
+                if item:
+                    r_type = item['type']
+                    break
 
         cost = global_mission_list[m_id]['cost']
         anima = self.role_data['anima']

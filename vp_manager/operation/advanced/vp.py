@@ -54,9 +54,20 @@ def assign_one_follower(index):
 
 
 def assign_follower_team(arrangement, index):
+    """
+    插件的站位:       右键上随从的顺序:
+     2   3   4         1   2   3
+       0   1             4   5
+    """
+
     arrangement = arrangement.lower()
+    reflect = [2, 3, 4, 0, 1]
+
+    new_arrange = ''.join([arrangement[i] for i in reflect])
+
+
     with device_manager:
-        for c in arrangement:
+        for c in new_arrange:
             if c == '1' or c == '0':
                 device_manager.mouse_right_click(position.SOLDIER_1_X, position.SOLDIER_1_Y)
                 time.sleep(0.1)
@@ -72,7 +83,7 @@ def assign_follower_team(arrangement, index):
                 time.sleep(0.1)
                 logger.warning(f'unknown arrangement: {arrangement}')
 
-        for i, c in enumerate(arrangement):
+        for i, c in enumerate(new_arrange):
             if c == '0':
                 x, y = position.BATTLE_GROUND[i]
                 device_manager.mouse_right_click(x, y)

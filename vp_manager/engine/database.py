@@ -1,5 +1,6 @@
 # coding=utf-8
 
+import logging
 import sqlite3
 import datetime
 from vp_manager.config.const import DB_PATH, FFR_UNKNOWN, FFR_NOT_SURE, TABLE_NAME
@@ -18,12 +19,24 @@ Table arrangement:  Arrangement and lowest health for each mission with 4+1
     arrange: win arrangement, example: "1202x", 1:tank-soldier, 2: heal-soldier, x: the follower, 0: empty
 """
 
-# TODO: insert, delete, select, update
-
 conn = sqlite3.connect(DB_PATH)  # db connection
+logger = logging.getLogger(__name__)
 
 
 def get_win_arranges(mission, followers, s_level):
+    def _format_record(item):
+        i2d = {
+            'm_id': item[1],
+            'm_level': item[2],
+            'f_id': item[3],
+            'f_level': item[4],
+            's_level': item[5],
+            'fail_health': item[6],
+            'win_health': item[7],
+            'arrange': item[8]
+        }
+        return i2d
+
     """
         select * from arrangement where m_id=m_id and m_level=m_level and s_level=s_level and
         ((f_id=f[0].id and f_level=f[0].level) or (f_id=f[1].id and f_level=f[1].level))
@@ -35,14 +48,18 @@ def get_win_arranges(mission, followers, s_level):
 
     sql_str = f'''SELECT * FROM arrangement WHERE m_id={m_id} and m_level={m_level} AND s_level={s_level} AND ''' + \
               f'''({sub_judge})'''
-    cursor = conn.cursor()
-    cursor.execute(sql_str)
-    results = cursor.fetchall()
-    cursor.close()
-    for r in results:
-        print(r)
+    try:
+        cursor = conn.cursor()
+        cursor.execute(sql_str)
+        results = cursor.fetchall()
+        cursor.close()
+    except Exception as e:
+        logger.error(f'search from db error: {str(e)}')
+        return []
 
-    return []
+    logger.info(f'get {len(results)} search results.')
+    data = [_format_record(item) for item in results]
+    return data
 
 
 def update_arrangement(mission, follower, s_level):
@@ -67,11 +84,14 @@ def update_arrangement(mission, follower, s_level):
         sql_str = update_sql
     else:
         raise VPException(f'wrong follower status: {status}')
-    cursor = conn.cursor()
-    cursor.execute(sql_str)
-    cursor.close()
-    conn.commit()
-    # TODO: log
+
+    try:
+        cursor = conn.cursor()
+        cursor.execute(sql_str)
+        cursor.close()
+        conn.commit()
+    except Exception as e:
+        logger.error(f'update db error: {str(e)}')
 
 
 def _test_db():

@@ -131,15 +131,21 @@ class Engine:
         followers = json.loads(f_pattern.findall(text)[-1])[:4]  # only search first 4 followers
         s_level = json.loads(s_pattern.findall(text)[-1])
 
+        if not (mission and followers and s_level):
+            logger.warning(f'can not get mission data, will end scan.')
+            return const.MER_END
+
         if not self.is_mission_end(mission):
+            logger.info(f'got trash mission, will end scan. {mission["id"]} {mission["name"]}')
             return const.MER_END
 
         if not self.is_mission_worth(mission):
+            logger.info(f'got worthless mission, will skip it. {mission["id"]} {mission["name"]} {mission["reward"]["type"]}')
             return const.MER_FAILED
 
         m_id, m_level = mission['id'], mission['level']
-        m_info = global_mission_list.get('m_id')
-        if not m_info:
+        mission = self.add_mission_field(mission)
+        if not mission:
             logger.warning(f"Unknown mission id: {m_id}")
             return const.MER_FAILED
 
@@ -151,7 +157,7 @@ class Engine:
         elif follower['status'] == const.FFR_MUST_WIN:
             is_mission_win = True
             logger.info(f'get arrangement by cache success, will arrange ({follower["level"]}) {follower["name"]} '
-                        f'({follower["health"]}) for mission ({m_level}){m_info["name"]}, arrangement is {follower["arrangement"]}')
+                        f'({follower["health"]}) for mission ({m_level}){mission["name"]}, arrangement is {follower["arrangement"]}')
             plugin_control.assign_follower_team(follower['arrangement'], follower['index'])
         elif follower['status'] == const.FFR_NOT_SURE or follower['status'] == const.FFR_UNKNOWN:
             arrange = self.get_arrangement_by_plugin(follower)
@@ -161,15 +167,15 @@ class Engine:
             if arrange:
                 is_mission_win = True
                 logger.info(f'get arrangement by plugin success, will arrange ({follower["level"]}) {follower["name"]} '
-                            f'({follower["health"]}) for mission ({m_level}){m_info["name"]}, arrangement is {arrange}')
+                            f'({follower["health"]}) for mission ({m_level}){mission["name"]}, arrangement is {arrange}')
 
         if is_mission_win:
             plugin_control.confirm_mission()
-            self.role_data['anima'] = self.role_data['anima'] - m_info['cost'] - 4
+            self.role_data['anima'] = self.role_data['anima'] - mission['cost'] - 4
             return const.MER_SUCCESS
         else:
             plugin_control.close_mission_view()
-            logger.info(f'mission ({m_level}){m_info["name"]} will fail anyway')
+            logger.info(f'mission ({m_level}){mission["name"]} will fail anyway')
             return const.MER_FAILED
 
     def get_arrangement_by_storage(self, mission, s_level, followers):
@@ -233,6 +239,7 @@ class Engine:
 
         if cost > anima - 4:
             return False
+        mission['reward']['type'] = r_type
         if r_type in [const.MRT_GOLD, const.MRT_ANIMA, const.MRT_PET]:  # TODO: seed, reputation
             return True
         return False
@@ -261,5 +268,13 @@ class Engine:
             return arrange
         else:
             return ''
+
+    def add_mission_field(self, mission):
+        if mission['id'] not in global_mission_list:
+            return None
+        m_info = global_mission_list.get(mission['id'])
+        mission['name'] = m_info['name']
+        mission['cost'] = m_info['cost']
+        return mission
 
 

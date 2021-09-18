@@ -30,9 +30,9 @@ def copy_text():
 
 def close_window(clear):
     with device_manager:
-        if clear:
+        if clear:  # 中间close按钮 清空聊天栏
             device_manager.mouse_click(position.COPY_CHAT_CLOSE_CLEAR_X, position.COPY_CHAT_CLOSE_CLEAR_Y)
-        else:
+        else:  # 右上角X 保留聊天栏
             device_manager.mouse_click(position.COPY_CHAT_CLOSE_NO_CLEAR_X, position.COPY_CHAT_CLOSE_NO_CLEAR_Y)
         # time.sleep(0.2)
 

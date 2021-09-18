@@ -11,7 +11,7 @@ Table arrangement:  Arrangement and lowest health for each mission with 4+1
     id: primary key
     m_id: mission id
     m_level: mission level
-    f_id: follower id
+    f_id: follower id (str)
     f_level: follow level
     s_level: soldier level
     fail_health: below this health, must fail
@@ -37,14 +37,9 @@ def get_win_arranges(mission, followers, s_level):
         }
         return i2d
 
-    """
-        select * from arrangement where m_id=m_id and m_level=m_level and s_level=s_level and
-        ((f_id=f[0].id and f_level=f[0].level) or (f_id=f[1].id and f_level=f[1].level))
-
-    """
     m_id, m_level = mission['id'], mission['level']
 
-    sub_judge = ' OR '.join([f'(f_id={fl["id"]} and f_level={fl["level"]})' for fl in followers])
+    sub_judge = ' OR '.join([f'(f_id=\'{fl["id"]}\' and f_level={fl["level"]})' for fl in followers])
 
     sql_str = f'''SELECT * FROM arrangement WHERE m_id={m_id} and m_level={m_level} AND s_level={s_level} AND ''' + \
               f'''({sub_judge})'''
@@ -74,13 +69,13 @@ def update_arrangement(mission, follower, s_level):
         win_health = f_health
 
     if status == FFR_UNKNOWN:
-        insert_sql = f'''INSERT INTO {TABLE_NAME} VALUES (null, {m_id}, {m_level}, {f_id}, {f_level}, ''' + \
+        insert_sql = f'''INSERT INTO {TABLE_NAME} VALUES (null, {m_id}, {m_level}, \'{f_id}\', {f_level}, ''' + \
                      f'''{s_level}, {fail_health}, {win_health}, '{arrange}')'''
         sql_str = insert_sql
     elif status == FFR_NOT_SURE:
         update_str = f'win_health={win_health}, arrange=\'{arrange}\'' if arrange else f'fail_health={fail_health}'
         update_sql = f'''UPDATE {TABLE_NAME} SET {update_str} WHERE m_id={m_id} AND ''' + \
-                     f'''m_level={m_level} AND f_id={f_id} AND f_level={f_level} AND s_level={s_level}'''
+                     f'''m_level={m_level} AND f_id='{f_id}' AND f_level={f_level} AND s_level={s_level}'''
         sql_str = update_sql
     else:
         raise VPException(f'wrong follower status: {status}')

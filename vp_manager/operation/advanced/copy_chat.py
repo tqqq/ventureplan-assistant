@@ -2,7 +2,7 @@
 import logging
 import time
 
-from pynput.keyboard import Key
+import subprocess
 
 from vp_manager.operation.basic import device_manager
 from vp_manager.config import position, sleep_time, key_setting
@@ -25,6 +25,7 @@ def copy_text():
         time.sleep(0.1)
         device_manager.kboard_combine_click('ctrl', 'c')
     time.sleep(0.2)
+    return
 
 
 def close_window(clear):
@@ -34,4 +35,22 @@ def close_window(clear):
         else:
             device_manager.mouse_click(position.COPY_CHAT_CLOSE_NO_CLEAR_X, position.COPY_CHAT_CLOSE_NO_CLEAR_Y)
         # time.sleep(0.2)
+
+
+def _get_clipboard_data(system='mac'):
+    if system == 'mac':
+        p = subprocess.Popen(['pbpaste'], stdout=subprocess.PIPE)
+        # retcode = p.wait()
+        data = p.stdout.read()
+
+        return data.decode(encoding='utf-8')
+    else:  # windows
+        # TODO: develop and test on windows
+        return "hahaha"
+
+
+if __name__ == '__main__':
+    # time.sleep(4)
+    data = _get_clipboard_data(system='mac')
+    print(data)
 

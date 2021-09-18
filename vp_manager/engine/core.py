@@ -17,10 +17,10 @@ logger = logging.getLogger(__name__)
 
 message_patterns = {
     const.MT_ROLE_DATA: re.compile(r'##ROLE_DATA##(.*?)##'),
-    const.MT_MISSION_DATA: re.compile(r'##MT_MISSION_DATA##(.*?)##'),
+    const.MT_MISSION_DATA: re.compile(r'##MISSION_DATA##(.*?)##'),
     const.MT_MISSION_RESULT: re.compile(r'##MISSION_RESULT##(.*?)##'),
-    const.MT_FOLLOWER_INFO: re.compile(r'##MISSION_RESULT##(.*?)##'),
-    const.MT_SOLDIER_LEVEL: re.compile(r'##MISSION_RESULT##(\d+)##'),
+    const.MT_FOLLOWER_INFO: re.compile(r'##FOLLOWER_INFO##(.*?)##'),
+    const.MT_SOLDIER_LEVEL: re.compile(r'##SOLDIER_LEVEL##(\d+)##'),
 }
 
 
@@ -105,7 +105,7 @@ class Engine:
 
         follower_data: [
             {
-                "id": 123,
+                "id": "0x00000000362F44CC",
                 "level": 47,
                 "health": 1230
             },

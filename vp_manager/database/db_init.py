@@ -10,8 +10,8 @@ def init_db():
 
     cur = conn.cursor()
     cur.execute(
-        f'''CREATE TABLE IF NOT EXISTS {TABLE_NAME} (id bigint primary key, m_id int, m_level int, f_id int, f_level int, ''' +
-        '''s_level int, fail_health int, win_health int, arrange char(20), update_time date)''')
+        f'''CREATE TABLE IF NOT EXISTS {TABLE_NAME} (id integer primary key autoincrement, m_id int, m_level int, f_id int, f_level int, ''' +
+        '''s_level int, fail_health int, win_health int, arrange char(20))''')
     cur.close()
     conn.commit()
     conn.close()

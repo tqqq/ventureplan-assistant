@@ -16,14 +16,9 @@ def open_venture_plan():
         device_manager.kboard_click(key1)
     time.sleep(0.8)
 
-    key2 = key_setting.KEY_CORGI_TOY
-    with device_manager:
-        device_manager.kboard_click(key2)
-    time.sleep(0.2)
-
     with device_manager:
         device_manager.mouse_click(position.COMMAND_TABLE_X, position.COMMAND_TABLE_Y)
-    time.sleep(0.2)
+    time.sleep(1)
 
 
 def complete_missions():
@@ -50,7 +45,13 @@ def assign_one_follower(index):
         x, y = position.FOLLOWERS[index]
         device_manager.mouse_right_click(x, y)
         time.sleep(0.1)
-    pass
+
+
+def remove_one_follower():
+    with device_manager:
+        x, y = position.BATTLE_GROUND[0]
+        device_manager.mouse_right_click(x, y)
+        time.sleep(0.5)
 
 
 def assign_follower_team(arrangement, index):

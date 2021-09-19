@@ -3,6 +3,7 @@
 import json
 import logging
 import re
+import time
 
 from vp_manager.operation.advanced import vp as plugin_control, \
     account as account_control, copy_chat as copy_control
@@ -29,8 +30,7 @@ class Engine:
     def __init__(self):  # TODO: muti window
         self.current_role = account_config.efficient_role[0]  # role name
         self.role_data = {}  # role name, anima
-        self.follower_data = {}  # follower_level, soldier level
-        self.mission_list = []  # just record first 6 missions, mission id, name, type, time, cost, level, reward
+        self.mission_list = []  # pre_assigned missions id
 
     def start(self):
         while True:
@@ -90,6 +90,7 @@ class Engine:
                 index += 1
             elif status == const.MER_END:
                 plugin_control.close_mission_view()
+                self.mission_list = []
                 break
 
         plugin_control.start_all_missions()
@@ -126,9 +127,13 @@ class Engine:
         f_pattern = message_patterns.get(const.MT_FOLLOWER_INFO)
         s_pattern = message_patterns.get(const.MT_SOLDIER_LEVEL)
 
-        mission = json.loads(m_pattern.findall(text)[-1])  # id, level
-        followers = json.loads(f_pattern.findall(text)[-1])[:4]  # only search first 4 followers
-        s_level = json.loads(s_pattern.findall(text)[-1])
+        try:
+            mission = json.loads(m_pattern.findall(text)[-1])  # id, level
+            followers = json.loads(f_pattern.findall(text)[-1])[:4]  # only search first 4 followers
+            s_level = json.loads(s_pattern.findall(text)[-1])
+        except IndexError:
+            logger.warning(f'can not get mission data, will end scan.')
+            return const.MER_END
 
         if not (mission and followers and s_level):
             logger.warning(f'can not get mission data, will end scan.')
@@ -170,6 +175,7 @@ class Engine:
 
         if is_mission_win:
             plugin_control.confirm_mission()
+            self.mission_list.append(mission['id'])
             self.role_data['anima'] = self.role_data['anima'] - mission['cost'] - 4
             return const.MER_SUCCESS
         else:
@@ -212,6 +218,8 @@ class Engine:
         """
             如果是垃圾任务(优先级低于箱子)，结束流程
         """
+        if mission['id'] in self.mission_list:
+            return True
         r_type = mission['type']
         is_end = r_type in [const.MRT_EQUIP, const.MRT_ASH, const.MRT_UNKNOWN, const.MRT_SEED, const.MRT_BATTLE]
         return is_end
@@ -250,6 +258,7 @@ class Engine:
         arrange = ''
         pattern = message_patterns.get(const.MT_MISSION_RESULT)
         for i in range(10):
+            time.sleep(1)
             text = self.get_message(clear=False)
             result = pattern.findall(text)
             if result:
@@ -259,6 +268,7 @@ class Engine:
         if arrange and arrange[0] in '012x':
             return arrange
         else:
+            plugin_control.remove_one_follower()
             return ''
 
     def add_mission_field(self, mission):

@@ -66,13 +66,14 @@ class DeviceManager:
         ms_controller.scroll(0, -3)
 
     def kboard_click(self, key):
+        items = key.split('+')
+        if len(items) == 2:
+            self.kboard_combine_click(items[0], items[1])
+
         k = self._get_key(key)
 
         kb_controller.press(k)
         kb_controller.release(k)
-
-        if key == 'esc':
-            print('just print esc')
 
     def kboard_long_lick(self, key):
         k = self._get_key(key)

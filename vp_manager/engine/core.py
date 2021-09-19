@@ -97,10 +97,7 @@ class Engine:
         mission: {
             "id": 123,
             "level": 48,
-            "reward": {
-                "id": "1234 1235",
-                "type": "gold"
-            }
+            "reward_id": "1234 1235"
         }
 
         follower_data: [
@@ -135,6 +132,12 @@ class Engine:
             logger.warning(f'can not get mission data, will end scan.')
             return const.MER_END
 
+        m_id, m_level = mission['id'], mission['level']
+        mission = self.add_mission_field(mission)
+        if not mission:
+            logger.warning(f"Unknown mission id: {m_id}")
+            return const.MER_FAILED
+
         if not self.is_mission_end(mission):
             logger.info(f'got trash mission, will end scan. {mission["id"]} {mission["name"]}')
             return const.MER_END
@@ -143,11 +146,8 @@ class Engine:
             logger.info(f'got worthless mission, will skip it. {mission["id"]} {mission["name"]} {mission["reward"]["type"]}')
             return const.MER_FAILED
 
-        m_id, m_level = mission['id'], mission['level']
-        mission = self.add_mission_field(mission)
-        if not mission:
-            logger.warning(f"Unknown mission id: {m_id}")
-            return const.MER_FAILED
+
+
 
         follower = self.get_arrangement_by_storage(mission, s_level, followers)
 
@@ -211,38 +211,31 @@ class Engine:
 
     def is_mission_end(self, mission):
         """
-            如果是垃圾任务，结束流程
+            如果是垃圾任务(优先级低于箱子)，结束流程
         """
-        reward = mission['reward']
-        r_type = reward.get('type')
-        is_end = r_type not in [const.MRT_ANIMA, const.MRT_GOLD, const.MRT_PET, const.MRT_BOX]
+        r_type = mission['type']
+        is_end = r_type in [const.MRT_EQUIP, const.MRT_ASH, const.MRT_UNKNOWN, const.MRT_SEED, const.MRT_BATTLE]
         return is_end
 
     def is_mission_worth(self, mission):
         """
-            判断任务值不值得做(裁缝/肉袋子)
+            判断任务值不值得做(高消耗/裁缝箱子/肉箱子)
         """
         # TODO: add complex logic, judge by role config
         m_id = mission['id']
-        reward = mission['reward']
-        r_id, r_type = reward.get('id'), reward.get('type')
-
-        if r_id and r_type == const.MRT_BOX:
-            for _id in r_id.split():
-                item = reward_list.get(_id)
-                if item:
-                    r_type = item['type']
-                    break
-
+        r_type = mission['type']
         cost = global_mission_list[m_id]['cost']
         anima = self.role_data['anima']
 
         if cost > anima - 4:
             return False
-        mission['reward']['type'] = r_type
-        if r_type in [const.MRT_GOLD, const.MRT_ANIMA, const.MRT_PET]:  # TODO: seed, reputation
-            return True
-        return False
+        if r_type in [const.MRT_BOX_CLOTH, const.MRT_BOX_MEAT]:
+            return False
+        if anima < 1000 and cost > 10:
+            return False
+        if anima < 5000 and cost > 50:
+            return False
+        return True
 
     def get_next_role(self, role, role_list):
         if role not in role_list:
@@ -275,6 +268,15 @@ class Engine:
         m_info = global_mission_list.get(mission['id'])
         mission['name'] = m_info['name']
         mission['cost'] = m_info['cost']
+        mission['type'] = m_info['type']
+
+        r_ids = mission.get('reward_id')
+        if r_ids:
+            for r_id in r_ids.strip().split():
+                rew = reward_list.get(r_id)
+                if rew:
+                    mission['type'] = rew['type']
+
         return mission
 
 

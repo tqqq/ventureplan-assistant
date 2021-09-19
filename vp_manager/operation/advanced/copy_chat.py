@@ -5,7 +5,7 @@ import time
 import subprocess
 
 from vp_manager.operation.basic import device_manager
-from vp_manager.config import position, sleep_time, key_setting
+from vp_manager.config import position, sleep_time, key_setting, const, account
 from vp_manager.utils.exceptions import VPException
 
 logger = logging.getLogger(__name__)
@@ -24,8 +24,11 @@ def copy_text():
         device_manager.kboard_combine_click('ctrl', 'a')
         time.sleep(0.1)
         device_manager.kboard_combine_click('ctrl', 'c')
-    time.sleep(0.2)
-    return
+    time.sleep(0.1)
+    system = account.system
+    text = _get_clipboard_data(system)
+
+    return text
 
 
 def close_window(clear):
@@ -37,8 +40,8 @@ def close_window(clear):
         # time.sleep(0.2)
 
 
-def _get_clipboard_data(system='mac'):
-    if system == 'mac':
+def _get_clipboard_data(system=const.SYSTEM_WIN):
+    if system == const.SYSTEM_MAC:
         p = subprocess.Popen(['pbpaste'], stdout=subprocess.PIPE)
         # retcode = p.wait()
         data = p.stdout.read()

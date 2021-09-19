@@ -70,6 +70,13 @@ class DeviceManager:
         kb_controller.press(k)
         kb_controller.release(k)
 
+    def kboard_long_lick(self, key):
+        k = self._get_key(key)
+
+        kb_controller.press(k)
+        time.sleep(0.5)
+        kb_controller.release(k)
+
     def kboard_combine_click(self, key1, key2):
         k1 = self._get_key(key1)
         k2 = self._get_key(key2)
@@ -84,8 +91,16 @@ device_manager = DeviceManager()
 
 
 def test():
+
     time.sleep(3)
-    device_manager.kboard_combine_click('ctrl', 'c')
+    # device_manager.kboard_combine_click('ctrl', 'c')
+    device_manager.kboard_long_lick('7')
+    time.sleep(1)
+    # device_manager.kboard_click('enter')
+    time.sleep(1)
+    device_manager.kboard_long_lick('1')
+    time.sleep(1)
+    device_manager.kboard_long_lick('1')
 
 
 # if __name__ == '__main__':

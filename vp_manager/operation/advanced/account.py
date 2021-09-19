@@ -11,6 +11,8 @@ logger = logging.getLogger(__name__)
 
 def open_client():
     with device_manager:
+        device_manager.mouse_click(position.BATTLE_NET_WINDOW_X, position.BATTLE_NET_WINDOW_X)
+        time.sleep(0.05)
         device_manager.mouse_click(position.START_GAME_X, position.START_GAME_Y)
     time.sleep(sleep_time.AFTER_START_GAME)
     with device_manager:

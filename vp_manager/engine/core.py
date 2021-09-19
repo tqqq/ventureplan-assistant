@@ -90,9 +90,9 @@ class Engine:
                 index += 1
             elif status == const.MER_END:
                 plugin_control.close_mission_view()
-                self.mission_list = []
                 break
 
+        self.mission_list = []
         plugin_control.start_all_missions()
 
     def execute_mission(self, index):

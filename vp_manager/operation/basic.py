@@ -20,6 +20,7 @@ KEY_MAP = {
     'down': Key.down,
     'enter': Key.enter,
     'esc': Key.esc,
+    'alt': Key.alt,
     'ctrl': Key.ctrl if system == SYSTEM_WIN else Key.cmd,
     # 'up': Key.up,
     # 'up': Key.up,
@@ -69,9 +70,9 @@ class DeviceManager:
         items = key.split('+')
         if len(items) == 2:
             self.kboard_combine_click(items[0], items[1])
+            return
 
         k = self._get_key(key)
-
         kb_controller.press(k)
         kb_controller.release(k)
 

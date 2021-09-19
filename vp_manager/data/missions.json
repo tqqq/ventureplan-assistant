@@ -1,0 +1,747 @@
+{
+  "2300": {
+    "name": "懒散划水",
+    "type": "XPitem",
+    "cost": 150
+  },
+  "2301": {
+    "name": "名师出高徒",
+    "type": "XPitem",
+    "cost": 150
+  },
+  "2302": {
+    "name": "铁腕战士小队",
+    "type": "XPitem",
+    "cost": 50
+  },
+  "2303": {
+    "name": "惯常勒索",
+    "type": "XPitem",
+    "cost": 50
+  },
+  "2304": {
+    "name": "多喝了两杯",
+    "type": "XPitem",
+    "cost": 50
+  },
+  "2305": {
+    "name": "意外延迟",
+    "type": "XPitem",
+    "cost": 50
+  },
+  "2306": {
+    "name": "包裹安检",
+    "type": "XPitem",
+    "cost": 50
+  },
+  "2307": {
+    "name": "海盗问题",
+    "type": "XPitem",
+    "cost": 50
+  },
+  "2169": {
+    "name": "控制翠绿徘徊者",
+    "type": "XP",
+    "cost": 33
+  },
+  "2171": {
+    "name": "通灵师的巢穴",
+    "type": "XP",
+    "cost": 50
+  },
+  "2172": {
+    "name": "头狼沃尔夫兰",
+    "type": "XP",
+    "cost": 33
+  },
+  "2185": {
+    "name": "腐楠暴怒",
+    "type": "XP",
+    "cost": 33
+  },
+  "2201": {
+    "name": "弃誓方阵兵",
+    "type": "XP",
+    "cost": 30
+  },
+  "2202": {
+    "name": "幽影团",
+    "type": "XP",
+    "cost": 10
+  },
+  "2235": {
+    "name": "无人守护的裂隙",
+    "type": "XP",
+    "cost": 30
+  },
+  "2240": {
+    "name": "灵魂之慰",
+    "type": "XP",
+    "cost": 50
+  },
+  "2257": {
+    "name": "噬渊展览园",
+    "type": "XP",
+    "cost": 33
+  },
+  "2276": {
+    "name": "枯败时代",
+    "type": "XP",
+    "cost": 10
+  },
+  "2287": {
+    "name": "驱逐安德洛墨妲",
+    "type": "XP",
+    "cost": 50
+  },
+  "2308": {
+    "name": "轻盈清道夫",
+    "type": "SoulCinders",
+    "cost": 40
+  },
+  "2309": {
+    "name": "填饱肚子",
+    "type": "SoulCinders",
+    "cost": 40
+  },
+  "2310": {
+    "name": "尖皮尖牙",
+    "type": "SoulCinders",
+    "cost": 40
+  },
+  "2311": {
+    "name": "凶猛之翼",
+    "type": "SoulCinders",
+    "cost": 40
+  },
+  "2312": {
+    "name": "猎人成为猎物",
+    "type": "SoulCinders",
+    "cost": 33
+  },
+  "2313": {
+    "name": "破门者",
+    "type": "SoulCinders",
+    "cost": 33
+  },
+  "2178": {
+    "name": "戈姆侵扰",
+    "type": "Gold",
+    "cost": 10
+  },
+  "2186": {
+    "name": "暴走的欺诈者",
+    "type": "Gold",
+    "cost": 10
+  },
+  "2188": {
+    "name": "被附身的清道夫",
+    "type": "Gold",
+    "cost": 10
+  },
+  "2203": {
+    "name": "制服执事者",
+    "type": "Gold",
+    "cost": 10
+  },
+  "2207": {
+    "name": "延缓黑暗",
+    "type": "Gold",
+    "cost": 10
+  },
+  "2209": {
+    "name": "阴影中的徘徊者",
+    "type": "Gold",
+    "cost": 10
+  },
+  "2217": {
+    "name": "最终陨落",
+    "type": "Gold",
+    "cost": 10
+  },
+  "2221": {
+    "name": "钢铁与忧伤之脊",
+    "type": "Gold",
+    "cost": 10
+  },
+  "2227": {
+    "name": "绿色软泥和金子般的心",
+    "type": "Gold",
+    "cost": 10
+  },
+  "2236": {
+    "name": "新秩序",
+    "type": "Gold",
+    "cost": 10
+  },
+  "2243": {
+    "name": "调查那些调查者",
+    "type": "Gold",
+    "cost": 10
+  },
+  "2261": {
+    "name": "安抚天鬃马",
+    "type": "Gold",
+    "cost": 10
+  },
+  "2263": {
+    "name": "棘祸的反抗",
+    "type": "Gold",
+    "cost": 10
+  },
+  "2271": {
+    "name": "侦查通灵战潮",
+    "type": "Gold",
+    "cost": 10
+  },
+  "2282": {
+    "name": "饕餮的心能窃贼",
+    "type": "Gold",
+    "cost": 10
+  },
+  "2288": {
+    "name": "翼狮威胁",
+    "type": "Gold",
+    "cost": 10
+  },
+  "2168": {
+    "name": "灾难般的骷髅侵扰",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2175": {
+    "name": "教程",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2177": {
+    "name": "抓获心能走私者",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2174": {
+    "name": "教程",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2187": {
+    "name": "收敛狂野",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2183": {
+    "name": "腐楠吵闹鬼",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2191": {
+    "name": "劫猎和啮咬",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2199": {
+    "name": "痛苦挽歌",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2206": {
+    "name": "心能回收",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2208": {
+    "name": "黑暗协作",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2219": {
+    "name": "受保护的亵渎者",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2223": {
+    "name": "沾满软泥的水晶",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2225": {
+    "name": "骸虱幼虫",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2233": {
+    "name": "高塔上的恐惧之翼",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2237": {
+    "name": "苛捐杂税",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2241": {
+    "name": "贵族的欺诈",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2244": {
+    "name": "诱捕追踪者",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2262": {
+    "name": "放肆的灰烬食尸鬼",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2266": {
+    "name": "击溃棘祸",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2292": {
+    "name": "解决德鲁斯特",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2295": {
+    "name": "教程",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2314": {
+    "name": "心能之涌的传说",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2315": {
+    "name": "心能之涌的传说",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2316": {
+    "name": "心能之涌的传说",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2317": {
+    "name": "心能之涌的传说",
+    "type": "ReservoirAnima",
+    "cost": 10
+  },
+  "2182": {
+    "name": "清理沼泽鹿",
+    "type": "BattlePetCurrency",
+    "cost": 10
+  },
+  "2190": {
+    "name": "戴菲尔归来",
+    "type": "BattlePetCurrency",
+    "cost": 50
+  },
+  "2275": {
+    "name": "如棘在喉",
+    "type": "BattlePetCurrency",
+    "cost": 10
+  },
+  "2277": {
+    "name": "入侵行为",
+    "type": "BattlePetCurrency",
+    "cost": 50
+  },
+  "2220": {
+    "name": "龋齿",
+    "type": "VeiledAugmentRune",
+    "cost": 30
+  },
+  "2226": {
+    "name": "守卫之怒",
+    "type": "VeiledAugmentRune",
+    "cost": 50
+  },
+  "2264": {
+    "name": "摇滚罪碑",
+    "type": "VeiledAugmentRune",
+    "cost": 30
+  },
+  "2270": {
+    "name": "哈利斯男爵",
+    "type": "VeiledAugmentRune",
+    "cost": 50
+  },
+  "2180": {
+    "name": "黑暗歌利亚的暴虐",
+    "type": "Treasure",
+    "cost": 50
+  },
+  "2181": {
+    "name": "狂野的戴菲尔",
+    "type": "Treasure",
+    "cost": 50
+  },
+  "2184": {
+    "name": "收复暗穴",
+    "type": "Treasure",
+    "cost": 50
+  },
+  "2193": {
+    "name": "碎皮具象",
+    "type": "Treasure",
+    "cost": 50
+  },
+  "2222": {
+    "name": "清洗失败",
+    "type": "Treasure",
+    "cost": 50
+  },
+  "2238": {
+    "name": "违法庆祝",
+    "type": "Treasure",
+    "cost": 30
+  },
+  "2265": {
+    "name": "罪碑贮藏者",
+    "type": "Treasure",
+    "cost": 50
+  },
+  "2170": {
+    "name": "腐心最后的安息",
+    "type": "Treasure",
+    "cost": 50
+  },
+  "2273": {
+    "name": "云羽守护者",
+    "type": "Treasure",
+    "cost": 50
+  },
+  "2274": {
+    "name": "通灵战潮",
+    "type": "Treasure",
+    "cost": 50
+  },
+  "2278": {
+    "name": "可怕的卢吉尔",
+    "type": "Treasure",
+    "cost": 50
+  },
+  "2279": {
+    "name": "光烬入侵",
+    "type": "Treasure",
+    "cost": 30
+  },
+  "2280": {
+    "name": "决斗大师罗文",
+    "type": "Treasure",
+    "cost": 50
+  },
+  "2281": {
+    "name": "维阿莱女士",
+    "type": "Treasure",
+    "cost": 50
+  },
+  "2285": {
+    "name": "挑战柯克苏",
+    "type": "Treasure",
+    "cost": 50
+  },
+  "2286": {
+    "name": "巨化憎恶",
+    "type": "Treasure",
+    "cost": 50
+  },
+  "2289": {
+    "name": "阿伊拉的回响",
+    "type": "Treasure",
+    "cost": 50
+  },
+  "2290": {
+    "name": "贪婪的费尔姆",
+    "type": "Treasure",
+    "cost": 50
+  },
+  "2291": {
+    "name": "危险的收获",
+    "type": "Treasure",
+    "cost": 50
+  },
+  "2192": {
+    "name": "森林之傲",
+    "type": "Covenants",
+    "cost": 10
+  },
+  "2210": {
+    "name": "微光蝶数量过剩",
+    "type": "Covenants",
+    "cost": 10
+  },
+  "2272": {
+    "name": "记忆错误",
+    "type": "Covenants",
+    "cost": 10
+  },
+  "2293": {
+    "name": "窃种者",
+    "type": "Covenants",
+    "cost": 10
+  },
+  "2194": {
+    "name": "战役-艾雷祖尔的暴怒",
+    "type": "Campaign",
+    "cost": 55
+  },
+  "2195": {
+    "name": "战役-尖啸者禁音",
+    "type": "Campaign",
+    "cost": 25
+  },
+  "2196": {
+    "name": "战役-救援符光跳跃者",
+    "type": "Campaign",
+    "cost": 25
+  },
+  "2197": {
+    "name": "战役-净化被附身者",
+    "type": "Campaign",
+    "cost": 25
+  },
+  "2198": {
+    "name": "战役-暗穴之末",
+    "type": "Campaign",
+    "cost": 25
+  },
+  "2211": {
+    "name": "战役-黑暗低语",
+    "type": "Campaign",
+    "cost": 50
+  },
+  "2212": {
+    "name": "战役-裁定者的承诺",
+    "type": "Campaign",
+    "cost": 50
+  },
+  "2213": {
+    "name": "战役-拯救天驹",
+    "type": "Campaign",
+    "cost": 50
+  },
+  "2214": {
+    "name": "战役-弃誓者反击战",
+    "type": "Campaign",
+    "cost": 50
+  },
+  "2215": {
+    "name": "战役-战地队长之哀",
+    "type": "Campaign",
+    "cost": 50
+  },
+  "2228": {
+    "name": "战役-虽被遗弃-但并非无用",
+    "type": "Campaign",
+    "cost": 50
+  },
+  "2229": {
+    "name": "战役-碎骨者的宝藏",
+    "type": "Campaign",
+    "cost": 50
+  },
+  "2230": {
+    "name": "战役-安卡特的黑暗",
+    "type": "Campaign",
+    "cost": 50
+  },
+  "2231": {
+    "name": "战役-尼尔瓦斯卡的宏伟计划",
+    "type": "Campaign",
+    "cost": 50
+  },
+  "2232": {
+    "name": "战役-骸虱灾祸",
+    "type": "Campaign",
+    "cost": 25
+  },
+  "2245": {
+    "name": "战役-斯塔卡的最后一搏",
+    "type": "Campaign",
+    "cost": 25
+  },
+  "2246": {
+    "name": "战役-殴骨头狼",
+    "type": "Campaign",
+    "cost": 50
+  },
+  "2247": {
+    "name": "战役-不屈的查尔索克斯",
+    "type": "Campaign",
+    "cost": 50
+  },
+  "2248": {
+    "name": "战役-大闪和朋友们",
+    "type": "Campaign",
+    "cost": 50
+  },
+  "2249": {
+    "name": "战役-最终拼图",
+    "type": "Campaign",
+    "cost": 25
+  },
+  "2176": {
+    "name": "艾雷祖尔和他的族群",
+    "type": "Equip",
+    "cost": 50
+  },
+  "2179": {
+    "name": "戈姆集群",
+    "type": "Equip",
+    "cost": 50
+  },
+  "2204": {
+    "name": "师与徒",
+    "type": "Equip",
+    "cost": 50
+  },
+  "2218": {
+    "name": "骨锻",
+    "type": "Equip",
+    "cost": 30
+  },
+  "2224": {
+    "name": "逃离的通灵鳐",
+    "type": "Equip",
+    "cost": 30
+  },
+  "2242": {
+    "name": "后补旅团",
+    "type": "Equip",
+    "cost": 30
+  },
+  "2267": {
+    "name": "解构时间",
+    "type": "Equip",
+    "cost": 30
+  },
+  "2268": {
+    "name": "对决成吉斯",
+    "type": "Equip",
+    "cost": 50
+  },
+  "2283": {
+    "name": "泥与罚",
+    "type": "Equip",
+    "cost": 50
+  },
+  "2284": {
+    "name": "母蛛螫肢",
+    "type": "Equip",
+    "cost": 30
+  },
+  "2250": {
+    "name": "突破平原",
+    "type": "Maw",
+    "cost": 250
+  },
+  "2251": {
+    "name": "盖拉克的复仇",
+    "type": "Maw",
+    "cost": 250
+  },
+  "2252": {
+    "name": "凝团冥殇",
+    "type": "Maw",
+    "cost": 250
+  },
+  "2253": {
+    "name": "消灭巨人",
+    "type": "Maw",
+    "cost": 250
+  },
+  "2254": {
+    "name": "阴暗天空",
+    "type": "Maw",
+    "cost": 250
+  },
+  "2255": {
+    "name": "德拉沃克的阴谋",
+    "type": "Maw",
+    "cost": 250
+  },
+  "2256": {
+    "name": "豪华设计",
+    "type": "Maw",
+    "cost": 250
+  },
+  "2258": {
+    "name": "斩断丝线",
+    "type": "Maw",
+    "cost": 250
+  },
+  "2259": {
+    "name": "绝望之影",
+    "type": "Maw",
+    "cost": 250
+  },
+  "2260": {
+    "name": "克雷拉",
+    "type": "Maw",
+    "cost": 250
+  },
+  "2296": {
+    "name": "噬渊-突破平原",
+    "type": "Maw",
+    "cost": 250
+  },
+  "2297": {
+    "name": "噬渊-盖拉克的复仇",
+    "type": "Maw",
+    "cost": 250
+  },
+  "2298": {
+    "name": "噬渊-凝团冥殇",
+    "type": "Maw",
+    "cost": 100
+  },
+  "2299": {
+    "name": "噬渊-消灭巨人",
+    "type": "Maw",
+    "cost": 200
+  },
+  "2189": {
+    "name": "戈姆蛴啮咬者",
+    "type": "Reputation",
+    "cost": 10
+  },
+  "2200": {
+    "name": "骄矜必败",
+    "type": "Reputation",
+    "cost": 10
+  },
+  "2205": {
+    "name": "恐怖研究",
+    "type": "Reputation",
+    "cost": 10
+  },
+  "2216": {
+    "name": "被误导的畸体",
+    "type": "Reputation",
+    "cost": 10
+  },
+  "2234": {
+    "name": "暴走的殴骨者",
+    "type": "Reputation",
+    "cost": 10
+  },
+  "2239": {
+    "name": "突袭恐惧之翼",
+    "type": "Reputation",
+    "cost": 10
+  },
+  "2269": {
+    "name": "软泥和暴食者",
+    "type": "Reputation",
+    "cost": 10
+  },
+  "2294": {
+    "name": "潜伏者泛滥",
+    "type": "Reputation",
+    "cost": 10
+  }
+}

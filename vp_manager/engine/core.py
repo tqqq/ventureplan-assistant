@@ -8,9 +8,9 @@ from vp_manager.operation.advanced import vp as plugin_control, \
     account as account_control, copy_chat as copy_control
 from vp_manager.config import account as account_config, const
 from vp_manager.utils.exceptions import VPException
-from vp_manager.data.missions import mission_list as global_mission_list
-from vp_manager.data.followers import follower_list as global_follower_list
-from vp_manager.data.rewards import reward_list
+from vp_manager.data import mission_list as global_mission_list
+from vp_manager.data import follower_list as global_follower_list
+from vp_manager.data import reward_list
 from vp_manager.engine.database import get_win_arranges, update_arrangement
 
 logger = logging.getLogger(__name__)
@@ -273,9 +273,10 @@ class Engine:
         r_ids = mission.get('reward_id')
         if r_ids:
             for r_id in r_ids.strip().split():
-                rew = reward_list.get(r_id)
-                if rew:
-                    mission['type'] = rew['type']
+                r_type = reward_list.get(r_id)
+                if r_type:
+                    mission['type'] = r_type
+                    break
 
         return mission
 

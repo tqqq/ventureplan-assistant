@@ -29,7 +29,7 @@ ccpCopyFrame:SetToplevel(true);
 ccpCopyFrame:SetMovable(true);
 ccpCopyFrame:EnableMouse(true);
 tinsert(UISpecialFrames, "ccpCopyFrame");
-ccpCopyFrame:SetPoint("CENTER", UIParent, -100, 100);
+ccpCopyFrame:SetPoint("LEFT", UIParent, 0, 0);
 ccpCopyFrame:SetBackdrop({bgFile = "Interface\\Buttons\\WHITE8x8",insets = {top = 0, left = 0, bottom = 0, right = 0}});
 ccpCopyFrame:SetBackdropColor(0,0,0,.5);
 ccpCopyFrame.CharCount:Hide();
@@ -81,6 +81,7 @@ ccpCopyFrameBottomButton:SetHeight(22);
 ccpCopyFrameBottomButton:SetText("Close");
 ccpCopyFrameBottomButton:SetNormalFontObject("GameFontNormalSmall");
 ccpCopyFrameBottomButton:SetScript("OnClick", function(self, arg)
+	for i = 1, NUM_CHAT_WINDOWS do _G[format("ChatFrame%d", i)]:Clear() end;
 	ccpCopyFrame:Hide();
 end)
 ccpCopyFrameBottomButton:SetScript("OnMouseDown", function(self, button)
@@ -114,8 +115,8 @@ function CCP.openCcpCopyFrame(window, url)
 	if (not window) then
 		window = 1;
 	end
-	ccpCopyFrame:SetHeight(245);
-	ccpCopyFrame:SetWidth(400);
+	ccpCopyFrame:SetHeight(100);
+	ccpCopyFrame:SetWidth(150);
 	local fontSize = false;
 	local channelInfo = ChatTypeInfo["CHANNEL" .. window];
 	local guildChannelInfo = ChatTypeInfo["GUILD"];
@@ -259,11 +260,11 @@ function CCP.makeChatWindowButtons(i)
 	obj.bg = obj:CreateTexture(nil,	"ARTWORK");
 	obj.bg:SetTexture("Interface\\AddOns\\ChatCopyPaste\\Media\\copypaste");
 	obj.bg:SetAllPoints(obj);
-	obj:SetPoint("BOTTOMRIGHT", -2, -3);
+	obj:SetPoint("BOTTOMLEFT", 0, -0);
 	obj.texture = obj.bg;
 	obj:SetFrameLevel(7); --Level 7 to sit above an unusued scroll button.
-	obj:SetWidth(18);
-	obj:SetHeight(18);
+	obj:SetWidth(30);
+	obj:SetHeight(30);
 	obj:Hide();
 	obj:SetScript("OnClick", function(self, arg)
 		if (ccpCopyFrame:IsVisible()) then

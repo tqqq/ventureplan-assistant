@@ -611,6 +611,12 @@ local SortFollowerList, CompareFollowerXP do
 		if ac ~= bc then
 			return ac
 		end
+
+		ac, bc = special_follower_order[a.garrFollowerID] or 100, special_follower_order[b.garrFollowerID] or 100
+		if ac ~= bc then
+			return ac < bc
+		end
+
 		local uiFree = uiOrder and not (a.missionTimeEnd or a.inTentativeGroup)
 		if uiFree and a.soFavorite ~= b.soFavorite then
 			ac, bc = a.soFavorite, b.soFavorite
@@ -723,17 +729,82 @@ local function FollowerList_Refresh(self, setXPGain)
 		end
 		s.TroopInfo.tooltipText = FollowerList_GetTroopHint(fl)
 		SortFollowerList(fl, false, true)
-		for i=1,#fl do
+		for i=1, #fl < 8 and #fl or 8 do
 			local fi = fl[i]
 			FollowerButton_SetInfo(wf[i], fi)
 			wf[i]:Show()
 		end
-		for i=#fl+1,#wf do
-			wf[i]:Hide()
+		if #fl < 8 then
+			for i=#fl+1,8 do
+			    wf[i]:Hide()
+		    end
 		end
-		self:SetHeight(134+66*math.ceil(#fl/4))
+
+		self:SetHeight(134+66*math.ceil(2))
 		self.noRefresh = true
 	end
+	FollowerList_SyncToBoard(self)
+	FollowerList_SyncXPGain(self, setXPGain)
+end
+
+local function FollowerList_Show(self, setXPGain)
+	local s = S[self]
+	local wt, wf = s.troops, s.companions
+
+	local fl = C_Garrison.GetFollowers(123)
+	local ft = C_Garrison.GetAutoTroops(123)
+	for i=1,#ft do
+		FollowerButton_SetInfo(wt[i], AugmentFollowerInfo(ft[i]))
+	end
+	for i=1,#fl do
+		AugmentFollowerInfo(fl[i])
+	end
+	s.TroopInfo.tooltipText = FollowerList_GetTroopHint(fl)
+	SortFollowerList(fl, false, true)
+
+	--test code
+	--for i=1, #fl do
+	--	local fi = fl[i]
+	--	local f_id = fi.garrFollowerID
+	--	local stat = C_Garrison.GetFollowerAutoCombatStats(fi.followerID)
+	--	local f_name = fi.name
+	--	local f_heal = fi.health
+	--	print(f_id, "  ", f_name, " ", stat.currentHealth)
+	--
+	--
+	--end
+	--test code
+
+	for i=1, #fl < 8 and #fl or 8 do
+			local fi = fl[i]
+			FollowerButton_SetInfo(wf[i], fi)
+			wf[i]:Show()
+		end
+		if #fl < 8 then
+			for i=#fl+1,8 do
+			    wf[i]:Hide()
+		    end
+		end
+	self:SetHeight(134+66*math.ceil(2))
+	self.noRefresh = true
+
+	local text = ""
+	for i=1,#fl do
+		local fi = fl[i]
+		if fi.missionTimeEnd or i > 4 then
+			break
+		end
+		local stat = C_Garrison.GetFollowerAutoCombatStats(fi.followerID)
+		local st = string.format("{\"id\":\"%s\",\"level\":%d,\"health\":%d}", fi.garrFollowerID, fi.level, stat.currentHealth)
+		if text == "" then
+			text = st
+		else
+			text = text .. "," .. st
+		end
+	end
+	text = "##FOLLOWER_INFO##[" .. text .. "]##"
+	print(text)
+
 	FollowerList_SyncToBoard(self)
 	FollowerList_SyncXPGain(self, setXPGain)
 end
@@ -2074,7 +2145,7 @@ function Factory.FollowerList(parent)
 	t:SetText(L"Follwer")
 	t:SetPoint("TOPLEFT", 22, -107)
 	s.companions = {}
-	for i=1,24 do
+	for i=1,8 do
 		t = CreateObject("FollowerListButton", f, false)
 		t:SetPoint("TOPLEFT", ((i-1)%4)*76+14, -math.floor((i-1)/4)*66-126)
 		s.companions[i] = t
@@ -2085,7 +2156,7 @@ function Factory.FollowerList(parent)
 	f.SyncToBoard = FollowerList_SyncToBoard
 	f.SyncXPGain = FollowerList_SyncXPGain
 	f:SetScript("OnUpdate", FollowerList_OnUpdate)
-	f:SetScript("OnShow", FollowerList_Refresh)
+	f:SetScript("OnShow", FollowerList_Show)
 	f:Hide()
 	return f
 end

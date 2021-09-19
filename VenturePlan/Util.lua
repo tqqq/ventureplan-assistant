@@ -211,6 +211,26 @@ do -- Tentative Groups
 				end
 			end
 			StopBoardAnimations(CovenantMissionFrame.MissionTab.MissionPage.Board)
+
+			local level = mi.missionScalar
+	        local mid_my = mi.missionID
+			local m_type = lbs[mid_my]
+			local item_id = ""
+			if m_type == "XPitem" or m_type == "SoulCinders" or m_type == "Treasure" then
+				for k, v in pairs(mi.rewards) do
+					if v.itemID then
+						item_id = item_id .. "  " .. v.itemID
+					end
+				end
+			end
+			local final_result = "##MISSION_DATA##{\"id\": %d, \"level\": %d, \"reward_id\": \"%s\"}##"
+			final_result = string.format(final_result, mid_my, level, item_id)
+			print(final_result)
+
+			local soldier = C_Garrison.GetAutoTroops(123)[1]
+			local text = "##SOLDIER_LEVEL##" .. soldier.level .. "##"
+			print(text)
+
 		end
 	end
 	function U.StoreMissionsGroup(mid, gt, disbandGroups)

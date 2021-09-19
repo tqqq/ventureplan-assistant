@@ -1,0 +1,1 @@
+--/run for i = 1, NUM_CHAT_WINDOWS do _G[format("ChatFrame%d", i)]:Clear() end

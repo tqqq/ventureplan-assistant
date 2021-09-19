@@ -1,22 +1,38 @@
 --任务排序：数字越小，越排到最前面
 zPaiXu = {
-["XPitem"] = 1,            --经验物品
-["XP"] = 2,                --经验
-["SoulCinders"] = 3,       --灵魂薪尘
-["Gold"] = 4,              --金币
-["ReservoirAnima"] = 5,    --心能
-["BattlePetCurrency"] = 6, --小宠物币
-["VeiledAugmentRune"] = 7, --帷幕强化符文 (加力量、智力等)
-["Treasure"] = 8,          --箱子
-["Covenants"] = 9,         --盟约
-["Campaign"] = 10,         --战役
-["Equip"] = 11,            --装备
-["Maw"] = 12,              --噬渊
-["Reputation"] = 13,       --声望
---["BattlePet"] = 14,      --小宠物
---["Other"] = 15,          --其他
---["Ignore"] = 16,         --忽略
-["Unknown"] = 17,          --未知
+    ["Gold"] = 1,              --金币
+    ["ReservoirAnima"] = 2,    --心能
+    ["BattlePetCurrency"] = 3, --小宠物币
+    ["Reputation"] = 4,       --声望
+    ["XPitem"] = 5,            --经验物品
+    ["SoulCinders"] = 6,       --灵魂薪尘
+    ["Treasure"] = 7,          --箱子
+    ["XP"] = 8,                --经验
+    ["VeiledAugmentRune"] = 9, --帷幕强化符文 (加力量、智力等)
+    ["Covenants"] = 10,         --盟约
+    ["Campaign"] = 11,         --战役
+    ["Equip"] = 12,            --装备
+    ["Maw"] = 13,              --噬渊
+
+    --["BattlePet"] = 14,      --小宠物
+    --["Other"] = 15,          --其他
+    --["Ignore"] = 16,         --忽略
+    ["Unknown"] = 17,          --未知
+}
+
+
+special_mission_order = {
+    [2266]=1, --击溃棘祸
+    [2243]=2, --调查那些调查者
+    [2239]=3, --突袭恐惧之翼
+}
+
+special_follower_order = {
+    [1264]=1,  -- 织梦者
+    [1337]=2,  -- 苏拉努姆
+    [1281]=3,  -- 罗斯维林
+    [1285]=4,  -- 泰赞
+    --[????]=5,  -- 艾拉
 }
 
 --任务类型数据

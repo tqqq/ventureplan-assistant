@@ -788,9 +788,23 @@ local function Shuffler_AssignGroup(g)
 			CovenantMissionFrame:RemoveFollowerFromMission(f[i], true)
 		end
 	end
+	local text = "##MISSION_RESULT##"
+	local arrange = {"0", "0", "0", "0", "0"}
 	for slot, ii in pairs(g) do
+		if ii.id == "0xFFFFFFFFFFFFFFFE" then --法夜近战兵
+			arrange[slot+1] = "2"
+		elseif ii.id == "0xFFFFFFFFFFFFFFFF" then --法夜远程兵
+			arrange[slot+1] = "1"
+		else
+			arrange[slot+1] = "x"
+		end
 		CovenantMissionFrame:AssignFollowerToMission(f[slot], GetFollowerInfo(ii.id))
 	end
+	for i=1, 5 do
+		text = text .. arrange[i]
+	end
+	text = text .. "##"
+	print(text)
 end
 local function Shuffler_OnUpdate(self)
 	local fin, g = Tact:Run()
@@ -800,6 +814,8 @@ local function Shuffler_OnUpdate(self)
 			Shuffler_AssignGroup(g)
 			Shuffler_OnLeave(self)
 			return
+		else
+			local text = "##MISSION_RESULT##fail##"
 		end
 	end
 	if GameTooltip:IsOwned(self) then

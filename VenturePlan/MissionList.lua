@@ -152,6 +152,12 @@ local function cmpMissionInfo(a,b)
 	if ac ~= bc then
 		return bc
 	end
+
+	ac, bc = special_mission_order[a.missionID] or 100, special_mission_order[b.missionID] or 100
+	if ac ~= bc then
+		return ac < bc
+	end
+
 	ac, bc = zPaiXu[lbs[a.missionID]], zPaiXu[lbs[b.missionID]]
 	if (ac == nil or lbs[a.missionID] == "Unknown") then
 	    print("|cffffcd00VenturePlan：|r|cffff4500任务ID:  |r|cffffcd00["..a.missionID.."]|r|cffff4500没有类型数据，请在aPaiXu.lua里添加该任务类型。|r")

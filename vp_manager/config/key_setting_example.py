@@ -9,4 +9,4 @@ KEY_LOGOUT = '2'
 KEY_CORGI_TOY = '3'
 
 KEY_SET_FIRST_VIEW = '7'  # 设置第一人称视角
-
+KEY_OPEN_CCP_WINDOW = 'r'

@@ -41,7 +41,7 @@ def enter_mission_view(m_id):
 
 def close_mission_view():
     with device_manager:
-        device_manager.mouse_click(position.CLOSE_MISSION_VIEW_X, position.CLOSE_MISSION_VIEW_Y)
+        device_manager.kboard_click('esc')
     time.sleep(0.3)
 
 
@@ -70,24 +70,24 @@ def assign_follower_team(arrangement, index):
         for c in new_arrange:
             if c == '1' or c == '0':
                 device_manager.mouse_right_click(position.SOLDIER_1_X, position.SOLDIER_1_Y)
-                time.sleep(0.1)
+                time.sleep(0.05)
             elif c == '2':
                 device_manager.mouse_right_click(position.SOLDIER_2_X, position.SOLDIER_2_Y)
-                time.sleep(0.1)
+                time.sleep(0.05)
             elif c == 'x':
                 x, y = position.FOLLOWERS[index]
                 device_manager.mouse_right_click(x, y)
-                time.sleep(0.1)
+                time.sleep(0.05)
             else:
                 device_manager.mouse_right_click(position.SOLDIER_1_X, position.SOLDIER_1_Y)
-                time.sleep(0.1)
+                time.sleep(0.05)
                 logger.warning(f'unknown arrangement: {arrangement}')
 
         for i, c in enumerate(new_arrange):
             if c == '0':
                 x, y = position.BATTLE_GROUND[i]
                 device_manager.mouse_right_click(x, y)
-                time.sleep(0.1)
+                time.sleep(0.5)
 
 
 def calculate_arrangement():

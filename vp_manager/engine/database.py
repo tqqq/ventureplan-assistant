@@ -1,10 +1,12 @@
 # coding=utf-8
 
 import logging
+import os
 import sqlite3
 import datetime
 from vp_manager.config.const import DB_PATH, FFR_UNKNOWN, FFR_NOT_SURE, TABLE_NAME
 from vp_manager.utils.exceptions import VPException
+from vp_manager.config.account import project_path
 
 """
 Table arrangement:  Arrangement and lowest health for each mission with 4+1
@@ -19,6 +21,7 @@ Table arrangement:  Arrangement and lowest health for each mission with 4+1
     arrange: win arrangement, example: "1202x", 1:tank-soldier, 2: heal-soldier, x: the follower, 0: empty
 """
 
+db_path = os.path.join(project_path, DB_PATH)
 conn = sqlite3.connect(DB_PATH)  # db connection
 logger = logging.getLogger(__name__)
 
@@ -26,18 +29,18 @@ logger = logging.getLogger(__name__)
 def get_win_arranges(mission, followers, s_level):
     def _format_record(item):
         i2d = {
-            'm_id': item[1],
+            'm_id': str(item[1]),
             'm_level': item[2],
             'f_id': item[3],
             'f_level': item[4],
             's_level': item[5],
             'fail_health': item[6],
             'win_health': item[7],
-            'arrange': item[8]
+            'arrangement': item[8]
         }
         return i2d
 
-    m_id, m_level = mission['id'], mission['level']
+    m_id, m_level = int(mission['id']), mission['level']
 
     sub_judge = ' OR '.join([f'(f_id=\'{fl["id"]}\' and f_level={fl["level"]})' for fl in followers])
 

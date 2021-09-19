@@ -86,8 +86,10 @@ class Engine:
         while index < 6:  # only do first 6 missions
             status = self.execute_mission(index)
             if status == const.MER_FAILED:
+                plugin_control.close_mission_view()
                 index += 1
             elif status == const.MER_END:
+                plugin_control.close_mission_view()
                 break
 
         plugin_control.start_all_missions()
@@ -132,22 +134,19 @@ class Engine:
             logger.warning(f'can not get mission data, will end scan.')
             return const.MER_END
 
-        m_id, m_level = mission['id'], mission['level']
         mission = self.add_mission_field(mission)
+        m_id, m_level = mission['id'], mission['level']
         if not mission:
             logger.warning(f"Unknown mission id: {m_id}")
             return const.MER_FAILED
 
-        if not self.is_mission_end(mission):
+        if self.is_mission_end(mission):
             logger.info(f'got trash mission, will end scan. {mission["id"]} {mission["name"]}')
             return const.MER_END
 
         if not self.is_mission_worth(mission):
-            logger.info(f'got worthless mission, will skip it. {mission["id"]} {mission["name"]} {mission["reward"]["type"]}')
+            logger.info(f'got worthless mission, will skip it. {mission["id"]} {mission["name"]} {mission["type"]}')
             return const.MER_FAILED
-
-
-
 
         follower = self.get_arrangement_by_storage(mission, s_level, followers)
 
@@ -174,7 +173,7 @@ class Engine:
             self.role_data['anima'] = self.role_data['anima'] - mission['cost'] - 4
             return const.MER_SUCCESS
         else:
-            plugin_control.close_mission_view()
+            # plugin_control.close_mission_view()
             logger.info(f'mission ({m_level}){mission["name"]} will fail anyway')
             return const.MER_FAILED
 
@@ -190,7 +189,7 @@ class Engine:
 
         for i, follower in enumerate(followers):
             follower['index'] = i  # position
-            follower['name'] = global_follower_list[follower['id']]
+            follower['name'] = global_follower_list[follower['id']]['name']
             f_id, f_health = follower['id'], follower['health']
             record = result.get(f_id)
             if not record:
@@ -229,9 +228,9 @@ class Engine:
 
         if cost > anima - 4:
             return False
-        if r_type in [const.MRT_BOX_CLOTH, const.MRT_BOX_MEAT]:
+        if r_type in [const.MRT_BOX_CLOTH, const.MRT_BOX_MEAT, const.MRT_BOX, const.MRT_EXP]:
             return False
-        if anima < 1000 and cost > 10:
+        if anima < 1000 and cost > 30:
             return False
         if anima < 5000 and cost > 50:
             return False
@@ -263,9 +262,11 @@ class Engine:
             return ''
 
     def add_mission_field(self, mission):
-        if mission['id'] not in global_mission_list:
+        mid_str = str(mission['id'])
+        if mid_str not in global_mission_list:
             return None
-        m_info = global_mission_list.get(mission['id'])
+        mission['id'] = mid_str
+        m_info = global_mission_list.get(mid_str)
         mission['name'] = m_info['name']
         mission['cost'] = m_info['cost']
         mission['type'] = m_info['type']

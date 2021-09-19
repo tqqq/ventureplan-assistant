@@ -1,13 +1,17 @@
 # coding=utf-8
 import json
+import os
 
 from vp_manager.config import const
+from vp_manager.config.account import project_path
 
+mission_path = os.path.join(project_path, const.MISSION_DATA_PATH)
+follower_path = os.path.join(project_path, const.FOLLOWER_DATA_PATH)
 
-with open('missions.json', 'r', encoding='utf-8') as f:
+with open(mission_path, 'r', encoding='utf-8') as f:
     mission_list = json.loads(f.read())
 
-with open('followers.json', 'r', encoding='utf-8') as f:
+with open(follower_path, 'r', encoding='utf-8') as f:
     follower_list = json.loads(f.read())
 
 reward_list = {

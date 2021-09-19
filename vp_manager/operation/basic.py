@@ -19,6 +19,7 @@ KEY_MAP = {
     'up': Key.up,
     'down': Key.down,
     'enter': Key.enter,
+    'esc': Key.esc,
     'ctrl': Key.ctrl if system == SYSTEM_WIN else Key.cmd,
     # 'up': Key.up,
     # 'up': Key.up,
@@ -70,6 +71,9 @@ class DeviceManager:
         kb_controller.press(k)
         kb_controller.release(k)
 
+        if key == 'esc':
+            print('just print esc')
+
     def kboard_long_lick(self, key):
         k = self._get_key(key)
 
@@ -94,14 +98,14 @@ def test():
 
     time.sleep(3)
     # device_manager.kboard_combine_click('ctrl', 'c')
-    device_manager.kboard_long_lick('7')
+    device_manager.kboard_click('esc')
     time.sleep(1)
-    # device_manager.kboard_click('enter')
-    time.sleep(1)
-    device_manager.kboard_long_lick('1')
-    time.sleep(1)
-    device_manager.kboard_long_lick('1')
+    # # device_manager.kboard_click('enter')
+    # time.sleep(1)
+    # device_manager.kboard_long_lick('1')
+    # time.sleep(1)
+    # device_manager.kboard_long_lick('1')
 
 
-# if __name__ == '__main__':
-#     test()
+if __name__ == '__main__':
+    test()

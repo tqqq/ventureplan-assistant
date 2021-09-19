@@ -5,8 +5,11 @@ SYSTEM_MAC = 'mac'
 SYSTEM_WIN = 'win'
 
 # TODO: path
-DB_PATH = 'F:\\notes\\vp_test\\ventureplan-assistant\\vp_manager\\database\\venture_plan.sqlite'
+DB_PATH = 'database/venture_plan.sqlite'
 TABLE_NAME = 'arrangement'
+MISSION_DATA_PATH = 'data/missions.json'
+FOLLOWER_DATA_PATH = 'data/followers.json'
+
 
 # message type from queue
 MT_ROLE_DATA = 'ROLE_DATA'

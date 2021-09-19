@@ -13,8 +13,8 @@ logger = logging.getLogger(__name__)
 
 def open_window():
     with device_manager:
-        device_manager.mouse_click(position.COPY_CHAT_OPEN_X, position.COPY_CHAT_OPEN_Y)
-    time.sleep(0.5)
+        device_manager.kboard_click(key_setting.KEY_OPEN_CCP_WINDOW)
+    time.sleep(0.3)
 
 
 def copy_text():

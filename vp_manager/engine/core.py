@@ -257,8 +257,8 @@ class Engine:
 
         arrange = ''
         pattern = message_patterns.get(const.MT_MISSION_RESULT)
-        for i in range(10):
-            time.sleep(1)
+        for i in range(60):
+            time.sleep(2)
             text = self.get_message(clear=False)
             result = pattern.findall(text)
             if result:

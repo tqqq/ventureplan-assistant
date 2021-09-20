@@ -45,6 +45,7 @@ def _get_clipboard_data(system=const.SYSTEM_WIN):
         p = subprocess.Popen(['pbpaste'], stdout=subprocess.PIPE)
         # retcode = p.wait()
         data = p.stdout.read()
+        p.communicate('trash data')
 
         return data.decode(encoding='utf-8')
     else:  # windows

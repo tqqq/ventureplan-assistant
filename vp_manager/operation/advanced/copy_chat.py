@@ -2,7 +2,7 @@
 import logging
 import time
 
-import subprocess
+import clipboard
 
 from vp_manager.operation.basic import device_manager
 from vp_manager.config import position, sleep_time, key_setting, const, account
@@ -42,19 +42,24 @@ def close_window(clear):
 
 def _get_clipboard_data(system=const.SYSTEM_WIN):
     if system == const.SYSTEM_MAC:
-        p = subprocess.Popen(['pbpaste'], stdout=subprocess.PIPE)
-        # retcode = p.wait()
-        data = p.stdout.read()
-        p.communicate('trash data')
+        data = clipboard.paste()
+        clipboard.copy('trash data')
 
-        return data.decode(encoding='utf-8')
+        return str(data)
     else:  # windows
         # TODO: develop and test on windows
         return "hahaha"
 
 
-if __name__ == '__main__':
-    # time.sleep(4)
-    data = _get_clipboard_data(system='mac')
-    print(data)
+def test():
+    import clipboard
+    time.sleep(4)
+    c = clipboard.paste()
+    print(c)
+    clipboard.copy('hahaha')
+    c = clipboard.paste()
+    print(c)
 
+
+# if __name__ == '__main__':
+#     test()

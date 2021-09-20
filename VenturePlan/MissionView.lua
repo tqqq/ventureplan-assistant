@@ -816,6 +816,7 @@ local function Shuffler_OnUpdate(self)
 			return
 		else
 			local text = "##MISSION_RESULT##fail##"
+			print(text)
 		end
 	end
 	if GameTooltip:IsOwned(self) then

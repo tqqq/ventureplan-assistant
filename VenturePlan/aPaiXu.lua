@@ -9,14 +9,16 @@ zPaiXu = {
     ["Treasure"] = 7,          --箱子
     ["XP"] = 8,                --经验
     ["VeiledAugmentRune"] = 9, --帷幕强化符文 (加力量、智力等)
-    ["Covenants"] = 10,         --盟约
-    ["Campaign"] = 11,         --战役
+    ["Campaign"] = 10,         --战役
+    ["Covenants"] = 11,         --盟约
+
     ["Equip"] = 12,            --装备
     ["Maw"] = 13,              --噬渊
 
     --["BattlePet"] = 14,      --小宠物
     --["Other"] = 15,          --其他
     --["Ignore"] = 16,         --忽略
+    ["Trash"] = 17,          --
     ["Unknown"] = 17,          --未知
 }
 
@@ -113,7 +115,8 @@ lbs = {
 [2226]="VeiledAugmentRune", --守卫之怒
 [2264]="VeiledAugmentRune", --摇滚罪碑
 [2270]="VeiledAugmentRune", --哈利斯男爵
-[2180]="Treasure", --黑暗歌利亚的暴虐
+
+[2180]="Trash", --黑暗歌利亚的暴虐
 [2181]="Treasure", --狂野的戴菲尔
 [2184]="Treasure", --收复暗穴
 [2193]="Treasure", --碎皮具象
@@ -125,13 +128,14 @@ lbs = {
 [2274]="Treasure", --通灵战潮
 [2278]="Treasure", --可怕的卢吉尔
 [2279]="Treasure", --光烬入侵
-[2280]="Treasure", --决斗大师罗文
+[2280]="Trash", --决斗大师罗文
 [2281]="Treasure", --维阿莱女士
-[2285]="Treasure", --挑战柯克苏
+[2285]="Trash", --挑战柯克苏
 [2286]="Treasure", --巨化憎恶
-[2289]="Treasure", --阿伊拉的回响
+[2289]="Trash", --阿伊拉的回响
 [2290]="Treasure", --贪婪的费尔姆
 [2291]="Treasure", --危险的收获
+
 [2192]="Covenants", --森林之傲
 [2210]="Covenants", --微光蝶数量过剩
 [2272]="Covenants", --记忆错误

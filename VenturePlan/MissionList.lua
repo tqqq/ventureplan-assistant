@@ -213,6 +213,10 @@ local function UpdateMissions()
 		end
 	end
 	EV("I_OBSERVE_AVAIL_MISSIONS", missions)
+
+	if #cMissions == 0 then
+		print("MISSION_COMPLETED")
+	end
 	for i=1,#missions do
 		local m = missions[i]
 		local mid = m.missionID

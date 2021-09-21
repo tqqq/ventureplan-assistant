@@ -22,6 +22,7 @@ message_patterns = {
     const.MT_MISSION_RESULT: re.compile(r'##MISSION_RESULT##(.*?)##'),
     const.MT_FOLLOWER_INFO: re.compile(r'##FOLLOWER_INFO##(.*?)##'),
     const.MT_SOLDIER_LEVEL: re.compile(r'##SOLDIER_LEVEL##(\d+)##'),
+    const.MT_MISSION_COMPLETED: re.compile(r'(MISSION_COMPLETED)'),
 }
 
 
@@ -39,6 +40,8 @@ class Engine:
                 self.work()
             except VPException as e:
                 logger.error(e.msg)
+            except Exception as e:
+                logger.error(str(e))
             account_control.close_client()
 
     def get_message(self, clear=True):
@@ -54,13 +57,17 @@ class Engine:
         while True:
             self.login(role)
             anima = self.role_data['anima']
+            success = True
             if int(anima) < 100:
                 logger.warning(f'{self.current_role} anima is {anima}, will skip this role')
             else:
                 logger.info(f'{self.current_role} anima is {anima}, start manage missions')
-                self.manage_missions()
+                success = self.manage_missions()
 
-            role = self.get_next_role(self.current_role, account_config.efficient_role)
+            if success:
+                role = self.get_next_role(self.current_role, account_config.efficient_role)
+            else:
+                role = self.current_role
             logger.info(f'{self.current_role} end manage missions, will switch to {role}')
             account_control.logout()
             self.role_data = {}
@@ -79,10 +86,21 @@ class Engine:
     def manage_missions(self):
 
         plugin_control.open_venture_plan()
+
         plugin_control.complete_missions()
+        pattern = message_patterns.get(const.MT_MISSION_COMPLETED)
+        complete = False
+        for i in range(5):
+            text = self.get_message(clear=False)
+            result = pattern.findall(text)
+            if result:
+                complete = True
+                break
+            time.sleep(2)
+        if not complete:
+            return False
 
         index = 0
-
         while index < 6:  # only do first 6 missions
             plugin_control.enter_mission_view(index)
             status = self.execute_mission(index)
@@ -95,6 +113,7 @@ class Engine:
 
         self.mission_list = []
         plugin_control.start_all_missions()
+        return True
 
     def execute_mission(self, index):
         """

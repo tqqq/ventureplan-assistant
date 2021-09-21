@@ -25,9 +25,6 @@ def complete_missions():
     with device_manager:
         device_manager.mouse_click(position.COMPLETE_MISSIONS_X, position.COMPLETE_MISSIONS_Y)
     time.sleep(sleep_time.COMPLETE_MISSIONS)
-    with device_manager:
-        device_manager.mouse_click(position.COMPLETE_MISSIONS_X, position.COMPLETE_MISSIONS_Y)
-    time.sleep(sleep_time.COMPLETE_MISSIONS)
 
 
 def enter_mission_view(m_id):

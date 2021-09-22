@@ -126,7 +126,7 @@ class Engine:
 
         try:
             mission = json.loads(m_pattern.findall(text)[-1])  # id, level
-            followers = json.loads(f_pattern.findall(text)[-1]) # only search first 4 followers
+            followers = json.loads(f_pattern.findall(text)[-1])  # only search first 4 followers
             s_level = json.loads(s_pattern.findall(text)[-1])
         except IndexError:
             logger.warning(f'can not get mission data, will end scan.')
@@ -163,7 +163,8 @@ class Engine:
             else:
                 return const.MER_FAILED
 
-        win_followers, unsure_followers = self.get_record_from_storage(mission, s_level, followers[:4])  # only search first 4 followers
+        win_followers, unsure_followers = self.get_record_from_storage(mission, s_level,
+                                                                       followers[:4])  # only search first 4 followers
 
         if win_followers:
             follower = win_followers[-1]  #
@@ -177,8 +178,9 @@ class Engine:
                 # TODO: update in new thread
                 update_arrangement(mission=mission, follower=follower, s_level=s_level)
                 if arrange:
-                    logger.info(f'get arrangement by plugin success, will arrange ({follower["level"]}) {follower["name"]} '
-                            f'({follower["health"]}) for mission ({m_level}){mission["name"]}, arrangement is {arrange}')
+                    logger.info(
+                        f'get arrangement by plugin success, will arrange ({follower["level"]}) {follower["name"]} '
+                        f'({follower["health"]}) for mission ({m_level}){mission["name"]}, arrangement is {arrange}')
                     break
         else:
             logger.info(f'mission ({m_level}){mission["name"]} will fail anyway')
@@ -315,5 +317,3 @@ class Engine:
                     break
 
         return mission
-
-

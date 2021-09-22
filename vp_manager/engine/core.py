@@ -84,6 +84,7 @@ class Engine:
         index = 0
 
         while index < 6:  # only do first 6 missions
+            plugin_control.enter_mission_view(index)
             status = self.execute_mission(index)
             if status == const.MER_FAILED:
                 plugin_control.close_mission_view()
@@ -98,14 +99,14 @@ class Engine:
     def execute_mission(self, index):
         """
         mission: {
-            "id": 123,
+            "id": "2300,
             "level": 48,
             "reward_id": "1234 1235"
         }
 
         follower_data: [
             {
-                "id": "0x00000000362F44CC",
+                "id": "1236",
                 "level": 47,
                 "health": 1230
             },
@@ -118,10 +119,6 @@ class Engine:
         :return:
         """
 
-        # 1. click button into mission view
-        plugin_control.enter_mission_view(index)
-
-        # 2. print and get follower_data, mission_data
         text = self.get_message()
         m_pattern = message_patterns.get(const.MT_MISSION_DATA)
         f_pattern = message_patterns.get(const.MT_FOLLOWER_INFO)
@@ -129,7 +126,7 @@ class Engine:
 
         try:
             mission = json.loads(m_pattern.findall(text)[-1])  # id, level
-            followers = json.loads(f_pattern.findall(text)[-1])[:4]  # only search first 4 followers
+            followers = json.loads(f_pattern.findall(text)[-1]) # only search first 4 followers
             s_level = json.loads(s_pattern.findall(text)[-1])
         except IndexError:
             logger.warning(f'can not get mission data, will end scan.')
@@ -153,37 +150,46 @@ class Engine:
             logger.info(f'got worthless mission, will skip it. {mission["id"]} {mission["name"]} {mission["type"]}')
             return const.MER_FAILED
 
-        follower = self.get_arrangement_by_storage(mission, s_level, followers)
+        for i, follower in enumerate(followers):
+            follower['index'] = i  # position
 
-        is_mission_win = False
-        if not follower:
-            pass
-        elif follower['status'] == const.FFR_MUST_WIN:
-            is_mission_win = True
+        if mission['type'] == const.MRT_EXP and len(followers) > 6:  # 随从数>6时派最低的5个
+            arrangement = self.assign_xp_missions(followers)
+            if arrangement:
+                plugin_control.confirm_mission()
+                self.mission_list.append(mission['id'])
+                self.role_data['anima'] = self.role_data['anima'] - mission['cost'] - 4
+                return const.MER_SUCCESS
+            else:
+                return const.MER_FAILED
+
+        win_followers, unsure_followers = self.get_record_from_storage(mission, s_level, followers[:4])  # only search first 4 followers
+
+        if win_followers:
+            follower = win_followers[-1]  #
             logger.info(f'get arrangement by cache success, will arrange ({follower["level"]}) {follower["name"]} '
                         f'({follower["health"]}) for mission ({m_level}){mission["name"]}, arrangement is {follower["arrangement"]}')
             plugin_control.assign_follower_team(follower['arrangement'], follower['index'])
-        elif follower['status'] == const.FFR_NOT_SURE or follower['status'] == const.FFR_UNKNOWN:
-            arrange = self.get_arrangement_by_plugin(follower)
-            follower['arrangement'] = arrange
-            # TODO: update in new thread
-            update_arrangement(mission=mission, follower=follower, s_level=s_level)
-            if arrange:
-                is_mission_win = True
-                logger.info(f'get arrangement by plugin success, will arrange ({follower["level"]}) {follower["name"]} '
+        elif unsure_followers:
+            for follower in followers:
+                arrange = self.get_arrangement_by_plugin(follower)
+                follower['arrangement'] = arrange
+                # TODO: update in new thread
+                update_arrangement(mission=mission, follower=follower, s_level=s_level)
+                if arrange:
+                    logger.info(f'get arrangement by plugin success, will arrange ({follower["level"]}) {follower["name"]} '
                             f'({follower["health"]}) for mission ({m_level}){mission["name"]}, arrangement is {arrange}')
-
-        if is_mission_win:
-            plugin_control.confirm_mission()
-            self.mission_list.append(mission['id'])
-            self.role_data['anima'] = self.role_data['anima'] - mission['cost'] - 4
-            return const.MER_SUCCESS
+                    break
         else:
-            # plugin_control.close_mission_view()
             logger.info(f'mission ({m_level}){mission["name"]} will fail anyway')
             return const.MER_FAILED
 
-    def get_arrangement_by_storage(self, mission, s_level, followers):
+        plugin_control.confirm_mission()
+        self.mission_list.append(mission['id'])
+        self.role_data['anima'] = self.role_data['anima'] - mission['cost'] - 4
+        return const.MER_SUCCESS
+
+    def get_record_from_storage(self, mission, s_level, followers):
         """
             followers: the first 4 followers
         """
@@ -191,28 +197,26 @@ class Engine:
         result = get_win_arranges(mission=mission, s_level=s_level, followers=followers)
         result = {item['f_id']: item for item in result}
 
-        final_follower = None
+        win_followers, unsure_followers = [], []
 
-        for i, follower in enumerate(followers):
-            follower['index'] = i  # position
+        for follower in followers:
             follower['name'] = global_follower_list[follower['id']]['name']
             f_id, f_health = follower['id'], follower['health']
             record = result.get(f_id)
             if not record:
                 follower['status'] = const.FFR_UNKNOWN
+                unsure_followers.append(follower)
             elif f_health <= record['fail_health']:
                 continue
             elif f_health >= record['win_health']:
                 follower['status'] = const.FFR_MUST_WIN
                 follower['arrangement'] = record['arrangement']
-                final_follower = follower
-                break
+                win_followers.append(follower)
             else:
                 follower['status'] = const.FFR_NOT_SURE
-            if not final_follower:
-                final_follower = follower
+                unsure_followers.append(follower)
 
-        return final_follower
+        return win_followers, unsure_followers
 
     def is_mission_end(self, mission):
         """
@@ -236,7 +240,7 @@ class Engine:
 
         if cost > anima - 4:
             return False
-        if r_type in [const.MRT_BOX_CLOTH, const.MRT_BOX_MEAT, const.MRT_BOX, const.MRT_EXP]:
+        if r_type in [const.MRT_BOX_CLOTH, const.MRT_BOX_MEAT, const.MRT_BOX]:
             return False
         if anima < 1000 and cost > 30:
             return False
@@ -258,6 +262,27 @@ class Engine:
         arrange = ''
         pattern = message_patterns.get(const.MT_MISSION_RESULT)
         for i in range(60):
+            time.sleep(2)
+            text = self.get_message(clear=False)
+            result = pattern.findall(text)
+            if result:
+                arrange = result[-1]
+                break
+
+        if arrange and arrange[0] in '012x':
+            return arrange
+        else:
+            plugin_control.remove_one_follower()
+            return ''
+
+    def assign_xp_missions(self, followers):
+        for follower in followers[-5:]:
+            plugin_control.assign_one_follower(follower['index'])
+
+        plugin_control.calculate_arrangement()
+        arrange = ''
+        pattern = message_patterns.get(const.MT_MISSION_RESULT)
+        for i in range(10):
             time.sleep(2)
             text = self.get_message(clear=False)
             result = pattern.findall(text)

@@ -9,9 +9,22 @@ from vp_manager.utils.exceptions import VPException
 logger = logging.getLogger(__name__)
 
 
+def choose_battle_account(index):
+    with device_manager:
+        device_manager.mouse_click(position.BATTLE_NET_WINDOW_X, position.BATTLE_NET_WINDOW_Y)
+        time.sleep(0.5)
+        device_manager.mouse_click(position.BATTLE_NET_WINDOW_X, position.BATTLE_NET_WINDOW_Y)
+        time.sleep(0.5)
+        device_manager.mouse_click(position.BN_CHOOSE_ACCOUNT_X, position.BN_CHOOSE_ACCOUNT_Y)
+        time.sleep(0.5)
+        x, y = position.BN_ACCOUNT[index]
+        device_manager.mouse_click(x, y)
+        time.sleep(0.5)
+
+
 def open_client():
     with device_manager:
-        device_manager.mouse_click(position.BATTLE_NET_WINDOW_X, position.BATTLE_NET_WINDOW_X)
+        device_manager.mouse_click(position.BATTLE_NET_WINDOW_X, position.BATTLE_NET_WINDOW_Y)
         time.sleep(0.05)
         device_manager.mouse_click(position.START_GAME_X, position.START_GAME_Y)
     time.sleep(sleep_time.AFTER_START_GAME)

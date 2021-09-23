@@ -33,16 +33,16 @@ class Engine:
         self.role_data = {}  # role name, anima
         self.mission_list = []  # pre_assigned missions id
 
-    def start(self):
-        while True:
-            try:
-                account_control.open_client()
-                self.work()
-            except VPException as e:
-                logger.error(e.msg)
-            except Exception as e:
-                logger.error(str(e))
-            account_control.close_client()
+    def start(self, limit=-1):
+        # while True:
+        try:
+            account_control.choose_battle_account(index=1)
+            account_control.open_client()
+            self.work(limit)
+        except VPException as e:
+            logger.error(e.msg)
+
+        account_control.close_client()
 
     def get_message(self, clear=True):
         copy_control.open_window()
@@ -51,10 +51,12 @@ class Engine:
 
         return text
 
-    def work(self):
+    def work(self, limit=-1):
         role = self.current_role
+        if limit == -1:
+            limit = 10000
 
-        while True:
+        for i in range(limit):
             self.login(role)
             anima = self.role_data['anima']
             success = True
@@ -191,7 +193,7 @@ class Engine:
                         f'({follower["health"]}) for mission ({m_level}){mission["name"]}, arrangement is {follower["arrangement"]}')
             plugin_control.assign_follower_team(follower['arrangement'], follower['index'])
         elif unsure_followers:
-            for follower in followers:
+            for follower in unsure_followers:
                 arrange = self.get_arrangement_by_plugin(follower)
                 follower['arrangement'] = arrange
                 # TODO: update in new thread
@@ -294,6 +296,7 @@ class Engine:
             return arrange
         else:
             plugin_control.remove_one_follower()
+            plugin_control.confirm_mission()  # 清楚聊天栏
             return ''
 
     def assign_xp_missions(self, followers):

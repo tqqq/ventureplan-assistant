@@ -5,6 +5,21 @@ BATTLE_NET_WINDOW_X = 0
 BATTLE_NET_WINDOW_Y = 0
 
 
+# 战网按钮
+BN_CHOOSE_ACCOUNT_X, BN_CHOOSE_ACCOUNT_Y = 0, 0
+BN_ACCOUNT = [
+    (0, 0),
+    (0, 0),
+    (0, 0),
+    (0, 0),
+    (0, 0),
+    (0, 0),
+    (0, 0),
+]
+
+
+
+
 # 战网 开始游戏按钮
 START_GAME_X = 0
 START_GAME_Y = 0

@@ -11,9 +11,14 @@ dictConfig(LOG_CONFIG)
 
 def main():
     from vp_manager.engine.core import Engine
+    from vp_manager.engine.pet_engine import PetEngine
 
-    engine = Engine()
-    engine.start()  # TODO: threading
+    while True:
+        engine1 = Engine()
+        engine1.start(limit=36)  # TODO: threading
+
+        engine2 = PetEngine()
+        engine2.start()
 
 
 if __name__ == '__main__':

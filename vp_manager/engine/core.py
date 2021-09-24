@@ -263,7 +263,7 @@ class Engine:
 
         if cost > anima - 4:
             return False
-        if r_type in [const.MRT_BOX_CLOTH, const.MRT_BOX_MEAT, const.MRT_BOX]:
+        if r_type in [const.MRT_BOX_CLOTH, const.MRT_BOX_MEAT, const.MRT_BOX, const.MRT_EXP]:
             return False
         if anima < 1000 and cost > 30:
             return False

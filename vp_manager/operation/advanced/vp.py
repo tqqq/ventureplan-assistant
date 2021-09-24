@@ -99,7 +99,7 @@ def calculate_arrangement():
 
 def confirm_mission():
     with device_manager:
-        device_manager.mouse_click(position.CONFIRM_MISSION_X, position.CONFIRM_MISSION_Y)
+        device_manager.kboard_click(key_setting.KEY_PRE_ASSIGN)
     time.sleep(0.3)
 
 

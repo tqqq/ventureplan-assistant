@@ -791,6 +791,9 @@ local function FollowerList_Show(self, setXPGain)
 	local text = ""
 	for i=1,#fl do
 		local fi = fl[i]
+		if fi.missionTimeEnd or fi.inTentativeGroup then
+			break
+		end
 		local stat = C_Garrison.GetFollowerAutoCombatStats(fi.followerID)
 		local st = string.format("{\"id\":\"%s\",\"level\":%d,\"health\":%d}", fi.garrFollowerID, fi.level, stat.currentHealth)
 		if text == "" then

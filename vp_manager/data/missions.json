@@ -42,7 +42,7 @@
   "2169": {
     "name": "控制翠绿徘徊者",
     "type": "XP",
-    "cost": 33
+    "cost": 10
   },
   "2171": {
     "name": "通灵师的巢穴",
@@ -52,12 +52,12 @@
   "2172": {
     "name": "头狼沃尔夫兰",
     "type": "XP",
-    "cost": 33
+    "cost": 30
   },
   "2185": {
     "name": "腐楠暴怒",
     "type": "XP",
-    "cost": 33
+    "cost": 30
   },
   "2201": {
     "name": "弃誓方阵兵",
@@ -82,7 +82,7 @@
   "2257": {
     "name": "噬渊展览园",
     "type": "XP",
-    "cost": 33
+    "cost": 10
   },
   "2276": {
     "name": "枯败时代",
@@ -97,32 +97,32 @@
   "2308": {
     "name": "轻盈清道夫",
     "type": "SoulCinders",
-    "cost": 40
+    "cost": 25
   },
   "2309": {
     "name": "填饱肚子",
     "type": "SoulCinders",
-    "cost": 40
+    "cost": 25
   },
   "2310": {
     "name": "尖皮尖牙",
     "type": "SoulCinders",
-    "cost": 40
+    "cost": 25
   },
   "2311": {
     "name": "凶猛之翼",
     "type": "SoulCinders",
-    "cost": 40
+    "cost": 25
   },
   "2312": {
     "name": "猎人成为猎物",
     "type": "SoulCinders",
-    "cost": 33
+    "cost": 25
   },
   "2313": {
     "name": "破门者",
     "type": "SoulCinders",
-    "cost": 33
+    "cost": 25
   },
   "2178": {
     "name": "戈姆侵扰",
@@ -210,9 +210,9 @@
     "cost": 10
   },
   "2175": {
-    "name": "教程",
+    "name": "教程：脊骨集群",
     "type": "ReservoirAnima",
-    "cost": 10
+    "cost": 1
   },
   "2177": {
     "name": "抓获心能走私者",
@@ -220,9 +220,9 @@
     "cost": 10
   },
   "2174": {
-    "name": "教程",
+    "name": "教程：处理碎岩",
     "type": "ReservoirAnima",
-    "cost": 10
+    "cost": 1
   },
   "2187": {
     "name": "收敛狂野",
@@ -305,9 +305,9 @@
     "cost": 10
   },
   "2295": {
-    "name": "教程",
+    "name": "教程：通灵干预",
     "type": "ReservoirAnima",
-    "cost": 10
+    "cost": 1
   },
   "2314": {
     "name": "心能之涌的传说",
@@ -382,7 +382,7 @@
   "2184": {
     "name": "收复暗穴",
     "type": "Treasure",
-    "cost": 50
+    "cost": 30
   },
   "2193": {
     "name": "碎皮具象",
@@ -467,12 +467,12 @@
   "2192": {
     "name": "森林之傲",
     "type": "Covenants",
-    "cost": 10
+    "cost": 30
   },
   "2210": {
     "name": "微光蝶数量过剩",
     "type": "Covenants",
-    "cost": 10
+    "cost": 30
   },
   "2272": {
     "name": "记忆错误",
@@ -485,114 +485,134 @@
     "cost": 10
   },
   "2194": {
-    "name": "战役-艾雷祖尔的暴怒",
+    "name": "战役：艾雷祖尔的暴怒",
     "type": "Campaign",
-    "cost": 55
+    "cost": 25,
+    "stage": 12
   },
   "2195": {
-    "name": "战役-尖啸者禁音",
+    "name": "战役：尖啸者禁音",
     "type": "Campaign",
-    "cost": 25
+    "cost": 25,
+    "stage": 24
   },
   "2196": {
-    "name": "战役-救援符光跳跃者",
+    "name": "战役：救援符光跳跃者",
     "type": "Campaign",
-    "cost": 25
+    "cost": 25,
+    "stage": 36
   },
   "2197": {
-    "name": "战役-净化被附身者",
+    "name": "战役：净化被附身者",
     "type": "Campaign",
-    "cost": 25
+    "cost": 25,
+    "stage": 48
   },
   "2198": {
-    "name": "战役-暗穴之末",
+    "name": "战役：暗穴之末",
     "type": "Campaign",
-    "cost": 25
+    "cost": 25,
+    "stage": 60
   },
   "2211": {
-    "name": "战役-黑暗低语",
+    "name": "战役：黑暗低语",
     "type": "Campaign",
-    "cost": 50
+    "cost": 25,
+    "stage": 12
   },
   "2212": {
-    "name": "战役-裁定者的承诺",
+    "name": "战役：裁定者的承诺",
     "type": "Campaign",
-    "cost": 50
+    "cost": 25,
+    "stage": 24
   },
   "2213": {
-    "name": "战役-拯救天驹",
+    "name": "战役：拯救天驹",
     "type": "Campaign",
-    "cost": 50
+    "cost": 50,
+    "stage": 36
   },
   "2214": {
-    "name": "战役-弃誓者反击战",
+    "name": "战役：弃誓者反击战",
     "type": "Campaign",
-    "cost": 50
+    "cost": 25,
+    "stage": 48
   },
   "2215": {
-    "name": "战役-战地队长之哀",
+    "name": "战役：战地队长之哀",
     "type": "Campaign",
-    "cost": 50
+    "cost": 50,
+    "stage": 60
   },
   "2228": {
-    "name": "战役-虽被遗弃-但并非无用",
+    "name": "战役：虽被遗弃，但并非无用",
     "type": "Campaign",
-    "cost": 50
+    "cost": 25,
+    "stage": 12
   },
   "2229": {
-    "name": "战役-碎骨者的宝藏",
+    "name": "战役：碎骨者的宝藏",
     "type": "Campaign",
-    "cost": 50
+    "cost": 50,
+    "stage": 24
   },
   "2230": {
-    "name": "战役-安卡特的黑暗",
+    "name": "战役：安卡特的黑暗",
     "type": "Campaign",
-    "cost": 50
+    "cost": 50,
+    "stage": 36
   },
   "2231": {
-    "name": "战役-尼尔瓦斯卡的宏伟计划",
+    "name": "战役：尼尔瓦斯卡的宏伟计划",
     "type": "Campaign",
-    "cost": 50
+    "cost": 50,
+    "stage": 48
   },
   "2232": {
-    "name": "战役-骸虱灾祸",
+    "name": "战役：骸虱灾祸",
     "type": "Campaign",
-    "cost": 25
+    "cost": 25,
+    "stage": 60
   },
   "2245": {
-    "name": "战役-斯塔卡的最后一搏",
+    "name": "战役：斯塔卡的最后一搏",
     "type": "Campaign",
-    "cost": 25
+    "cost": 25,
+    "stage": 12
   },
   "2246": {
-    "name": "战役-殴骨头狼",
+    "name": "战役：殴骨头狼",
     "type": "Campaign",
-    "cost": 50
+    "cost": 50,
+    "stage": 24
   },
   "2247": {
-    "name": "战役-不屈的查尔索克斯",
+    "name": "战役：不屈的查尔索克斯",
     "type": "Campaign",
-    "cost": 50
+    "cost": 50,
+    "stage": 36
   },
   "2248": {
-    "name": "战役-大闪和朋友们",
+    "name": "战役：大闪和朋友们",
     "type": "Campaign",
-    "cost": 50
+    "cost": 50,
+    "stage": 48
   },
   "2249": {
-    "name": "战役-最终拼图",
+    "name": "战役：最终拼图",
     "type": "Campaign",
-    "cost": 25
+    "cost": 25,
+    "stage": 60
   },
   "2176": {
     "name": "艾雷祖尔和他的族群",
     "type": "Equip",
-    "cost": 50
+    "cost": 30
   },
   "2179": {
     "name": "戈姆集群",
     "type": "Equip",
-    "cost": 50
+    "cost": 30
   },
   "2204": {
     "name": "师与徒",
@@ -600,7 +620,7 @@
     "cost": 50
   },
   "2218": {
-    "name": "骨锻",
+    "name": "骨锻？还是骨“断”吧",
     "type": "Equip",
     "cost": 30
   },
@@ -637,70 +657,70 @@
   "2250": {
     "name": "突破平原",
     "type": "Maw",
-    "cost": 250
+    "cost": 100
   },
   "2251": {
     "name": "盖拉克的复仇",
     "type": "Maw",
-    "cost": 250
+    "cost": 200
   },
   "2252": {
     "name": "凝团冥殇",
     "type": "Maw",
-    "cost": 250
+    "cost": 100
   },
   "2253": {
     "name": "消灭巨人",
     "type": "Maw",
-    "cost": 250
+    "cost": 200
   },
   "2254": {
-    "name": "阴暗天空",
+    "name": "阴暗天空，黑暗未来",
     "type": "Maw",
-    "cost": 250
+    "cost": 100
   },
   "2255": {
     "name": "德拉沃克的阴谋",
     "type": "Maw",
-    "cost": 250
+    "cost": 200
   },
   "2256": {
     "name": "豪华设计",
     "type": "Maw",
-    "cost": 250
+    "cost": 100
   },
   "2258": {
     "name": "斩断丝线",
     "type": "Maw",
-    "cost": 250
+    "cost": 200
   },
   "2259": {
     "name": "绝望之影",
     "type": "Maw",
-    "cost": 250
+    "cost": 100
   },
   "2260": {
-    "name": "克雷拉",
+    "name": "克雷拉，悲哀之翼",
     "type": "Maw",
-    "cost": 250
+    "cost": 200
   },
   "2296": {
-    "name": "噬渊-突破平原",
+    "name": "噬渊：突破平原",
     "type": "Maw",
-    "cost": 250
+    "cost": 100
   },
   "2297": {
-    "name": "噬渊-盖拉克的复仇",
+    "name": "噬渊：盖拉克的复仇",
     "type": "Maw",
-    "cost": 250
+    "cost": 200
   },
   "2298": {
-    "name": "噬渊-凝团冥殇",
+    "name": "噬渊：凝团冥殇",
     "type": "Maw",
     "cost": 100
   },
   "2299": {
-    "name": "噬渊-消灭巨人",
+    "name": "噬渊：消灭巨人",
     "type": "Maw",
     "cost": 200
   },

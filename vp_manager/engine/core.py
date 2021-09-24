@@ -167,7 +167,7 @@ class Engine:
             logger.info(f'got trash mission, will end scan. {mission["id"]} {mission["name"]}')
             return const.MER_END
 
-        if not self.is_mission_worth(mission):
+        if not self.is_mission_worth(mission, s_level):
             logger.info(f'got worthless mission, will skip it. {mission["id"]} {mission["name"]} {mission["type"]}')
             return const.MER_FAILED
 
@@ -243,17 +243,17 @@ class Engine:
 
     def is_mission_end(self, mission):
         """
-            如果是垃圾任务(优先级低于箱子)，结束流程
+            如果是垃圾任务(优先级低于箱子和战役)，结束流程
         """
         if mission['id'] in self.mission_list:
             return True
         r_type = mission['type']
-        is_end = r_type in [const.MRT_EQUIP, const.MRT_ASH, const.MRT_UNKNOWN, const.MRT_SEED, const.MRT_BATTLE]
+        is_end = r_type in [const.MRT_EQUIP, const.MRT_ASH, const.MRT_UNKNOWN, const.MRT_SEED]
         return is_end
 
-    def is_mission_worth(self, mission):
+    def is_mission_worth(self, mission, s_level):
         """
-            判断任务值不值得做(高消耗/裁缝箱子/肉箱子)
+            判断任务值不值得做(高消耗/裁缝箱子/肉箱子/高等级战役)
         """
         # TODO: add complex logic, judge by role config
         m_id = mission['id']
@@ -263,6 +263,21 @@ class Engine:
 
         if cost > anima - 4:
             return False
+
+        if r_type == const.MRT_BATTLE:
+            stage = global_mission_list[m_id]['stage']
+            if stage == 60:
+                return s_level == 60
+            if stage == 48:  # 48 or 60
+                return s_level > 45
+            if stage == 36:
+                return s_level > 35
+            if stage == 24:
+                return s_level > 25
+            if stage == 12:
+                return s_level > 10
+            return False
+
         if r_type in [const.MRT_BOX_CLOTH, const.MRT_BOX_MEAT, const.MRT_BOX, const.MRT_EXP]:
             return False
         if anima < 1000 and cost > 30:

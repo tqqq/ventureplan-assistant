@@ -147,7 +147,7 @@ class Engine:
 
         try:
             mission = json.loads(m_pattern.findall(text)[-1])  # id, level
-            followers = json.loads(f_pattern.findall(text)[-1])  # only search first 4 followers
+            followers = json.loads(f_pattern.findall(text)[-1])[:8]  # only search first 8 followers
             s_level = json.loads(s_pattern.findall(text)[-1])
         except IndexError:
             logger.warning(f'can not get mission data, will end scan.')

@@ -26,6 +26,7 @@ KEY_MAP = {
     # 'up': Key.up,
 }
 
+
 class DeviceManager:
 
     def __init__(self):

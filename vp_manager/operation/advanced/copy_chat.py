@@ -25,8 +25,7 @@ def copy_text():
         time.sleep(0.1)
         device_manager.kboard_combine_click('ctrl', 'c')
     time.sleep(0.1)
-    system = account.system
-    text = _get_clipboard_data(system)
+    text = _get_clipboard_data()
 
     return text
 
@@ -40,15 +39,12 @@ def close_window(clear):
         # time.sleep(0.2)
 
 
-def _get_clipboard_data(system=const.SYSTEM_WIN):
-    if system == const.SYSTEM_MAC:
-        data = clipboard.paste()
-        clipboard.copy('trash data')
+def _get_clipboard_data():
 
-        return str(data)
-    else:  # windows
-        # TODO: develop and test on windows
-        return "hahaha"
+    data = clipboard.paste()
+    clipboard.copy('trash data')
+
+    return str(data)
 
 
 def test():

@@ -181,8 +181,7 @@ class Engine:
                 self.mission_list.append(mission['id'])
                 self.role_data['anima'] = self.role_data['anima'] - mission['cost'] - 4
                 return const.MER_SUCCESS
-            else:
-                return const.MER_FAILED
+            return const.MER_FAILED
 
         win_followers, unsure_followers = self.get_record_from_storage(mission, s_level,
                                                                        followers[:4])  # only search first 4 followers
@@ -278,7 +277,7 @@ class Engine:
                 return s_level > 10
             return False
 
-        if r_type in [const.MRT_BOX_CLOTH, const.MRT_BOX_MEAT, const.MRT_BOX, const.MRT_EXP]:
+        if r_type in [const.MRT_BOX_CLOTH, const.MRT_BOX_MEAT, const.MRT_BOX]:
             return False
         if anima < 1000 and cost > 30:
             return False

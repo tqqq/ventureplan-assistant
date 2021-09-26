@@ -776,15 +776,15 @@ local function FollowerList_Show(self, setXPGain)
 	--test code
 
 	for i=1, #fl < 8 and #fl or 8 do
-			local fi = fl[i]
-			FollowerButton_SetInfo(wf[i], fi)
-			wf[i]:Show()
+		local fi = fl[i]
+		FollowerButton_SetInfo(wf[i], fi)
+		wf[i]:Show()
+	end
+	if #fl < 8 then
+		for i=#fl+1,8 do
+			wf[i]:Hide()
 		end
-		if #fl < 8 then
-			for i=#fl+1,8 do
-			    wf[i]:Hide()
-		    end
-		end
+	end
 	self:SetHeight(134+66*math.ceil(2))
 	self.noRefresh = true
 
@@ -794,6 +794,10 @@ local function FollowerList_Show(self, setXPGain)
 		if fi.missionTimeEnd or fi.inTentativeGroup then
 			break
 		end
+		if i > 8 then
+			break
+		end
+
 		local stat = C_Garrison.GetFollowerAutoCombatStats(fi.followerID)
 		local st = string.format("{\"id\":\"%s\",\"level\":%d,\"health\":%d}", fi.garrFollowerID, fi.level, stat.currentHealth)
 		if text == "" then

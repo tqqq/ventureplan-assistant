@@ -35,6 +35,7 @@ def enter_mission_view(m_id):
 
 
 def close_mission_view():
+    time.sleep(0.1)
     with device_manager:
         device_manager.kboard_click('esc')
     time.sleep(0.3)

@@ -56,7 +56,7 @@ class Engine:
         if limit == -1:
             limit = 10000
 
-        for i in range(limit):
+        for i in range(limit*2):
             self.login(role)
             anima = self.role_data['anima']
             success = True
@@ -65,6 +65,9 @@ class Engine:
             else:
                 logger.info(f'{self.current_role} anima is {anima}, start manage missions')
                 success = self.manage_missions()
+
+            if i >= limit and role == account_config.efficient_role[0]:
+                break
 
             if success:
                 role = self.get_next_role(self.current_role, account_config.efficient_role)

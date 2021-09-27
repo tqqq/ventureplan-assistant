@@ -15,7 +15,7 @@ def main():
 
     while True:
         engine1 = Engine()
-        engine1.start(limit=36)  # TODO: threading
+        engine1.start(limit=21)  # TODO: threading
 
         engine2 = PetEngine()
         engine2.start()

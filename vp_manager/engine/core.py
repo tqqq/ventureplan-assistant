@@ -280,7 +280,7 @@ class Engine:
                 return s_level > 10
             return False
 
-        if r_type in [const.MRT_BOX_CLOTH, const.MRT_BOX_MEAT, const.MRT_BOX, const.MRT_EXP]:
+        if r_type in [const.MRT_BOX_CLOTH, const.MRT_BOX_MEAT, const.MRT_BOX, const.MRT_EXP, const.MRT_RUNE]:
             return False
         if anima < 1000 and cost > 30:
             return False
@@ -334,7 +334,6 @@ class Engine:
         if arrange and arrange[0] in '012x':
             return arrange
         else:
-            plugin_control.remove_one_follower()
             return ''
 
     def add_mission_field(self, mission):

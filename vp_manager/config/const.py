@@ -1,14 +1,15 @@
 # coding=utf-8
+import os
 
 # system
 SYSTEM_MAC = 'mac'
 SYSTEM_WIN = 'win'
 
 # TODO: path
-DB_PATH = 'database/venture_plan.sqlite'
+DB_PATH = os.path.join('database', 'venture_plan.sqlite')
 TABLE_NAME = 'arrangement'
-MISSION_DATA_PATH = 'data/missions.json'
-FOLLOWER_DATA_PATH = 'data/followers.json'
+MISSION_DATA_PATH = os.path.join('data', 'missions.json')
+FOLLOWER_DATA_PATH = os.path.join('data', 'followers.json')
 
 
 # message type from queue

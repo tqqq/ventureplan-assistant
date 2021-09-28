@@ -22,7 +22,7 @@ Table arrangement:  Arrangement and lowest health for each mission with 4+1
 """
 
 db_path = os.path.join(project_path, DB_PATH)
-conn = sqlite3.connect(DB_PATH)  # db connection
+conn = sqlite3.connect(db_path)  # db connection
 logger = logging.getLogger(__name__)
 
 

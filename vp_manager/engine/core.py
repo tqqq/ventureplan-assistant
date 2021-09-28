@@ -188,8 +188,9 @@ class Engine:
 
         win_followers, unsure_followers = self.get_record_from_storage(mission, s_level,
                                                                        followers[:4])  # only search first 4 followers
-
+        is_win = False
         if win_followers:
+            is_win = True
             follower = win_followers[-1]  #
             logger.info(f'get arrangement by cache success, will arrange ({follower["level"]}) {follower["name"]} '
                         f'({follower["health"]}) for mission ({m_level}){mission["name"]}, arrangement is {follower["arrangement"]}')
@@ -201,11 +202,13 @@ class Engine:
                 # TODO: update in new thread
                 update_arrangement(mission=mission, follower=follower, s_level=s_level)
                 if arrange:
+                    is_win = True
                     logger.info(
                         f'get arrangement by plugin success, will arrange ({follower["level"]}) {follower["name"]} '
                         f'({follower["health"]}) for mission ({m_level}){mission["name"]}, arrangement is {arrange}')
                     break
-        else:
+
+        if not is_win:
             logger.info(f'mission ({m_level}){mission["name"]} will fail anyway')
             return const.MER_FAILED
 

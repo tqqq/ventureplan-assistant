@@ -1,0 +1,7 @@
+pip~=21.2.4
+wheel~=0.37.0
+six~=1.16.0
+pynput~=1.7.3
+pyperclip~=1.8.2
+setuptools~=58.0.4
+clipboard~=0.0.4

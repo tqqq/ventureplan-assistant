@@ -160,11 +160,15 @@ class Engine:
             logger.warning(f'can not get mission data, will end scan.')
             return const.MER_END
 
-        mission = self.add_mission_field(mission)
         m_id, m_level = mission['id'], mission['level']
+        mission = self.add_mission_field(mission)
         if not mission:
             logger.warning(f"Unknown mission id: {m_id}")
             return const.MER_FAILED
+
+        if mission['id'] in self.mission_list:
+            plugin_control.confirm_mission()
+            return const.MER_SUCCESS
 
         if self.is_mission_end(mission):
             logger.info(f'got trash mission, will end scan. {mission["id"]} {mission["name"]}')
@@ -252,8 +256,6 @@ class Engine:
         """
             如果是垃圾任务(优先级低于箱子和战役)，结束流程
         """
-        if mission['id'] in self.mission_list:
-            return True
         r_type = mission['type']
         is_end = r_type in [const.MRT_EQUIP, const.MRT_ASH, const.MRT_UNKNOWN, const.MRT_SEED]
         return is_end

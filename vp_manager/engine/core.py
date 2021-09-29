@@ -177,7 +177,9 @@ class Engine:
         for i, follower in enumerate(followers):
             follower['index'] = i  # position
 
-        if mission['type'] == const.MRT_EXP and len(followers) > 6:  # 随从数>6时派最低的5个
+        if mission['type'] == const.MRT_EXP:
+            if len(followers) <= 6:  # 随从数>6时派最低的5个
+                return const.MER_FAILED
             arrangement = self.assign_xp_missions(followers)
             if arrangement:
                 plugin_control.confirm_mission()
@@ -283,7 +285,7 @@ class Engine:
                 return s_level > 10
             return False
 
-        if r_type in [const.MRT_BOX_CLOTH, const.MRT_BOX_MEAT, const.MRT_BOX, const.MRT_EXP, const.MRT_RUNE]:
+        if r_type in [const.MRT_BOX_CLOTH, const.MRT_BOX_MEAT, const.MRT_BOX, const.MRT_RUNE]:
             return False
         if anima < 1000 and cost > 30:
             return False

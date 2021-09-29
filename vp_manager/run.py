@@ -13,6 +13,9 @@ def main():
     from vp_manager.engine.core import Engine
     from vp_manager.engine.pet_engine import PetEngine
 
+    import time
+    time.sleep(5)
+
     while True:
         engine1 = Engine()
         engine1.start(limit=21)  # TODO: threading

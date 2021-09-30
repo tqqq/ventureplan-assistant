@@ -276,15 +276,15 @@ class Engine:
         if r_type == const.MRT_BATTLE:
             stage = global_mission_list[m_id]['stage']
             if stage == 60:
-                return s_level == 60
+                return s_level >= 50  # 50级上16
             if stage == 48:  # 48 or 60
-                return s_level > 45
+                return s_level > 40
             if stage == 36:
-                return s_level > 35
+                return s_level > 30
             if stage == 24:
-                return s_level > 25
+                return s_level > 20
             if stage == 12:
-                return s_level > 10
+                return s_level > 5
             return False
 
         if r_type in [const.MRT_BOX_CLOTH, const.MRT_BOX_MEAT, const.MRT_BOX, const.MRT_RUNE]:

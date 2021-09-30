@@ -41,6 +41,8 @@ class Engine:
             self.work(limit)
         except VPException as e:
             logger.error(e.msg)
+        except Exception as e:
+            logger.error(str(e), exc_info=True)
 
         account_control.close_client()
 
@@ -110,10 +112,8 @@ class Engine:
             plugin_control.enter_mission_view(index)
             status = self.execute_mission(index)
             if status == const.MER_FAILED:
-                plugin_control.close_mission_view()
                 index += 1
             elif status == const.MER_END:
-                plugin_control.close_mission_view()
                 break
 
         self.mission_list = []
@@ -154,42 +154,47 @@ class Engine:
             s_level = json.loads(s_pattern.findall(text)[-1])
         except IndexError:
             logger.warning(f'can not get mission data, will end scan.')
+            plugin_control.close_mission_view()
             return const.MER_END
 
         if not (mission and followers and s_level):
             logger.warning(f'can not get mission data, will end scan.')
+            plugin_control.close_mission_view()
             return const.MER_END
 
         m_id, m_level = mission['id'], mission['level']
         mission = self.add_mission_field(mission)
         if not mission:
             logger.warning(f"Unknown mission id: {m_id}")
+            plugin_control.close_mission_view()
             return const.MER_FAILED
 
         if mission['id'] in self.mission_list:
             plugin_control.confirm_mission()
-            return const.MER_SUCCESS
+            return const.MER_END
 
         if self.is_mission_end(mission):
             logger.info(f'got trash mission, will end scan. {mission["id"]} {mission["name"]}')
+            plugin_control.close_mission_view()
             return const.MER_END
 
         if not self.is_mission_worth(mission, s_level):
             logger.info(f'got worthless mission, will skip it. {mission["id"]} {mission["name"]} {mission["type"]}')
+            plugin_control.close_mission_view()
             return const.MER_FAILED
 
         for i, follower in enumerate(followers):
             follower['index'] = i  # position
 
         if mission['type'] == const.MRT_EXP:
-            if len(followers) <= 6:  # 随从数>6时派最低的5个
-                return const.MER_FAILED
-            arrangement = self.assign_xp_missions(followers)
-            if arrangement:
-                plugin_control.confirm_mission()
-                self.mission_list.append(mission['id'])
-                self.role_data['anima'] = self.role_data['anima'] - mission['cost'] - 4
-                return const.MER_SUCCESS
+            if len(followers) >= 6:  # 随从数>6时派最低的5个
+                arrangement = self.assign_xp_missions(followers)
+                if arrangement:
+                    plugin_control.confirm_mission()
+                    self.mission_list.append(mission['id'])
+                    self.role_data['anima'] = self.role_data['anima'] - mission['cost'] - 4
+                    return const.MER_SUCCESS
+            plugin_control.close_mission_view()
             return const.MER_FAILED
 
         win_followers, unsure_followers = self.get_record_from_storage(mission, s_level,
@@ -216,12 +221,13 @@ class Engine:
 
         if not is_win:
             logger.info(f'mission ({m_level}){mission["name"]} will fail anyway')
+            plugin_control.close_mission_view()
             return const.MER_FAILED
-
-        plugin_control.confirm_mission()
-        self.mission_list.append(mission['id'])
-        self.role_data['anima'] = self.role_data['anima'] - mission['cost'] - 4
-        return const.MER_SUCCESS
+        else:
+            plugin_control.confirm_mission()
+            self.mission_list.append(mission['id'])
+            self.role_data['anima'] = self.role_data['anima'] - mission['cost'] - 4
+            return const.MER_SUCCESS
 
     def get_record_from_storage(self, mission, s_level, followers):
         """
